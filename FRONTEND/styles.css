@@ -1,0 +1,30 @@
+body {
+    background-color: blueviolet !important;
+}
+
+h1.name {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 100px;
+    color: brown;
+}
+
+h3.name {
+    font-family: cursive;
+    color: brown;
+    margin-bottom: 50px;
+}
+
+h1.describe{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 70px;
+    color: rgb(0, 0, 0);
+}
+
+a.twirl {
+    font-size: 35px;
+    font-family: cursive;
+}
+
+.regist-form {
+    width: 403px;
+}

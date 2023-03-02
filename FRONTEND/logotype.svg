@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" id="svg2" viewBox="0 0 307.28 332.58" version="1.1">
+  <defs id="defs4">
+    <linearGradient id="linearGradient3684" x1="478" gradientUnits="userSpaceOnUse" y1="1272.4" gradientTransform="translate(240.73 -844.3)" x2="472.11" y2="1121.9">
+      <stop id="stop7201" stop-color="#fefefe" offset="0"/>
+      <stop id="stop7203" stop-color="#fefefe" stop-opacity="0" offset="1"/>
+    </linearGradient>
+  </defs>
+  <g id="layer1" transform="translate(-152.23 -111.68)">
+    <path id="path7116" opacity=".92857" fill-rule="evenodd" fill="url(#linearGradient3684)" d="m566.73 361.06c-4.2363-28.72 5.6372-58.986 24.633-80.671 13.655-12.691 33.951-21.711 52.56-15.845 11.854 4.2045 22.784 10.777 33.419 17.348 14.895 11.887 25.755 28.03 35.498 44.178 2.126 5.847-1.725-7.0105 37.091-46.176 20.09-15.201 48.718-23.583 72.349-11.594 15.342 7.8248 27.397 20.728 37.285 34.592 3.2238 14.685-15.657 18.028-24.891 24.323-57.893 29.486-124.52 34.48-188.43 31.913-26.479-1.0699-53.329-3.5165-79.516 1.9319z"/>
+    <g id="g3825" transform="translate(-864.29 -254.29)">
+      <path id="path3763-8" fill="#ffa0b0" d="m1311.5 531.38c7.4645 20.086 7.3625 34.005 6.7129 47.477-7.9676 45.004-45.069 66.951-87.268 78.287-31.458 8.9492-45.454 22.557-62.482 35.355v-161.12h143.04z"/>
+      <path id="path3763" fill="#ffc5cf" d="m1026.5 533.14c-7.4645 20.086-7.3625 34.005-6.7129 47.477 7.9676 45.004 45.069 66.951 87.268 78.287 31.458 8.9492 45.454 22.557 62.482 35.355v-161.12h-143.04z"/>
+      <path id="path3739-9" fill="#ffc5cf" d="m1168.5 389.95c25.394-2.5927 57.258-2.4944 95.46-20.456 18.797 13.949 26.81 29.998 38.891 45.962l-14.142 27.527c-5.421 15.831-1.3789 39.663 5.8083 56.821l16.162 30.81 1.0101 1.2627-146.94 0.50507 3.7546-142.43z"/>
+      <path id="path3715-0" stroke="#ffa0b0" stroke-width="7" fill="none" d="m1309.6 532.25h-278.82"/>
+      <path id="path3739" fill="#ffa0b0" d="m1167.7 389.45c-25.394-2.5927-47.914-1.7368-86.116-19.698-18.797 13.949-33.124 29.24-45.204 45.204l14.142 27.527c5.421 15.831 1.3789 39.663-5.8083 56.821l-16.162 30.81-1.0101 1.2627 138.64 0.50507 1.5152-142.43z"/>
+      <path id="path3715" stroke="#ffa1b0" stroke-width="7" fill="none" d="m1170.5 484.94v207.88"/>
+      <path id="path3715-4" stroke="#ffc5ce" stroke-width="7" fill="none" d="m1170.5 390.94v207.88"/>
+      <path id="path2830" stroke="#960012" stroke-width="7" fill="none" d="m1037.2 414.59s25.827-33.195 43.304-44.107c0.3992-0.24924 1.3393-0.44643 1.3393-0.44643 13.064 5.1235 25.212 10.374 39.821 13.75 14.61 3.3764 31.424 6.4317 47.322 5.9822 23.359-0.66059 47.552-2.6745 69.643-10.714l26.25-9.5536c0.6384-0.23233 1.2607 0.55109 1.7857 0.98214 15.804 12.975 39.464 46.964 39.464 46.964v1.0714c-6.7524 8.5842-11.2 18.253-15.536 28.214-3.2962 7.5735-2.7864 14.491-1.1607 22.321 2.7658 14.747 7.6462 28.897 13.036 42.857 5.8724 15.211 16.085 29.549 17.232 46.071 0.5719 8.2397 0.96 16.697-0.089 24.911-1.1747 9.1986-5.0718 18.129-10.089 25.893-6.8788 10.644-16.567 19.186-27.054 26.161-11.472 7.6305-24.122 13.15-36.964 18.036-13.758 5.2334-27.038 11.456-40.179 18.036-4.0287 2.0173-9.3409 4.5965-13.929 7.0536-8.5564 4.5827-16.665 10.129-23.661 16.875l-1.3393 0.0893c-7.5513-6.744-15.827-12.473-24.196-18.125-14.781-10.189-31.702-16.038-48.75-21.071-22.567-6.663-41.71-19.227-57.054-36.875-8.9078-10.246-14.173-23.896-15.982-37.411-0.753-5.6261-0.4356-16.55 0.3571-24.732 1.688-17.424 11.558-32.802 19.732-47.946 9.5269-18.299 16.118-40.318 11.964-61.071-2.0664-10.324-6.7874-20.253-13.036-28.75l-2.2322-3.0357v-1.4286l-0.0003-0.00002z"/>
+      <path id="path7112-4" stroke="#960012" stroke-width="7" fill="#f00" d="m1167 480.23c-39.487-51.144-78.02-26.379-87.248 8.373-21.683 81.658 87.182 124.84 87.182 124.84s117.98-43.609 94.504-125.51c-9.1125-31.79-55.313-59.016-94.438-7.7015z"/>
+    </g>
+  </g>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/>
+        <dc:publisher>
+          <cc:Agent rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>Love shield</dc:title>
+        <dc:date>2010-05-25T06:45:01</dc:date>
+        <dc:description>A pink and red love shield. Um escudo rosa e vermelho com cora&#xE7;&#xE3;o.</dc:description>
+        <dc:source>http://openclipart.org/detail/62707/love-shield-by-laobc</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>laobc</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>clip art</rdf:li>
+            <rdf:li>clipart</rdf:li>
+            <rdf:li>heart</rdf:li>
+            <rdf:li>heraldry</rdf:li>
+            <rdf:li>love</rdf:li>
+            <rdf:li>romance</rdf:li>
+            <rdf:li>shield</rdf:li>
+            <rdf:li>valentine</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

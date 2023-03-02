@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love agents</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body class="bg-purple">
+
+    <header>
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+            <a class="navbar-brand twirl d-flex align-items-center" href="#">
+                <img src="logotype.svg" alt="Logo" width="50" height="45" class="d-inline-block align-text-top">
+                LA
+            </a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container m-3">
+        <h1 class="name"><strong>Love Agents</strong></h1>
+        <h3 class="name">Найди свою вторую половинку</h3>
+        <h1 class=" lead"><b>Наш сайт поможет вам найти вашу половинку и сделает вас счастливым!!! </b></h1>
+
+        <div class="bg-white p-4 mt-2 rounded regist-form">
+            <form>
+                <legend>Пример отключенного набора полей</legend>
+                <div class="mb-3">
+                    <select class="form-select" id="you_gender" name="gender[]">
+                        <option value ="0">Укажите свой пол</option>
+                        <option value="1">Мужчина</option>
+                        <option value="2">Женщина</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <p><select class="form-select" name="gender_cand[]">
+                        <option value ="0">Укажите пол партнера</option>
+                        <option value="1">Мужчина</option>
+                        <option value="2">Женщина</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="disabledTextInput" class="form-label">Почта</label>
+                    <input type="email" class="form-control">
+                  </div>
+                  <div class="mb-3">
+                    <label for="disabledTextInput" class="form-label">Пароль</label>
+                    <input type="password" class="form-control">
+                  </div>
+                <button type="button" onclick="printData()" class="btn btn-primary">Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>
