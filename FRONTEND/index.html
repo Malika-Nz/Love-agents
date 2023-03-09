@@ -21,39 +21,60 @@
         </nav>
     </header>
 
-    <div class="container m-3">
-        <h1 class="name"><strong>Love Agents</strong></h1>
-        <h3 class="name">Найди свою вторую половинку</h3>
-        <h1 class=" lead"><b>Наш сайт поможет вам найти вашу половинку и сделает вас счастливым!!! </b></h1>
+    <div class="container">
 
-        <div class="bg-white p-4 mt-2 rounded regist-form">
-            <form>
-                <legend>Пример отключенного набора полей</legend>
-                <div class="mb-3">
-                    <select class="form-select" id="you_gender" name="gender[]">
-                        <option value ="0">Укажите свой пол</option>
-                        <option value="1">Мужчина</option>
-                        <option value="2">Женщина</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <p><select class="form-select" name="gender_cand[]">
-                        <option value ="0">Укажите пол партнера</option>
-                        <option value="1">Мужчина</option>
-                        <option value="2">Женщина</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="disabledTextInput" class="form-label">Почта</label>
-                    <input type="email" class="form-control">
-                  </div>
-                  <div class="mb-3">
-                    <label for="disabledTextInput" class="form-label">Пароль</label>
-                    <input type="password" class="form-control">
-                  </div>
-                <button type="button" onclick="printData()" class="btn btn-primary">Отправить</button>
-            </form>
+        <div class="d-flex">
+            <div class="mr-auto p-2">
+                <h1 class="name"><strong>Love Agents</strong></h1>
+                <h3 class="name">Найди свою вторую половинку</h3>
+                <h1 class="lead"><b>Наш сайт поможет вам найти вашу половинку и сделает вас счастливым!!!</b></h1>
+            </div>
+            <div class="p-2">
+                <img class="rounded" src="https://proza.ru/photos/hidalen.jpg" alt="">
+            </div>
         </div>
+
+        <div class="d-flex align-items-center">
+            <div class="col-6">
+                <div class="bg-white p-4 mt-2 rounded regist-form">
+                    <form>
+                        <legend>Пример отключенного набора полей</legend>
+                        <div class="mb-3">
+                            <select class="form-select" id="you_gender" name="gender[]">
+                                <option value ="0">Укажите свой пол</option>
+                                <option value="1">Мужчина</option>
+                                <option value="2">Женщина</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <p><select class="form-select" name="gender_cand[]">
+                                <option value ="0">Укажите пол партнера</option>
+                                <option value="1">Мужчина</option>
+                                <option value="2">Женщина</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">Почта</label>
+                            <input type="email" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">Пароль</label>
+                            <input type="password" class="form-control">
+                        </div>
+                        <button type="button" onclick="printData()" class="btn btn-primary">Отправить</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-5">
+                <figure class="alert alert-light" role="alert">
+                    <blockquote class="blockquote">
+                      <p>Неразделенная любовь так же отличается от любви взаимной, как заблуждение от истины.</p>
+                    </blockquote>
+                    <figcaption class="blockquote-footer">
+                        Жорж Санд
+                    </figcaption>
+                </figure>
+            </div>
     </div>
 
     <script src="script.js"></script>
