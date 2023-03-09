@@ -23,8 +23,14 @@ h1.describe{
 a.twirl {
     font-size: 35px;
     font-family: cursive;
+    text-decoration: none;
+    color: blueviolet;
 }
 
 .regist-form {
     width: 403px;
+}
+
+.bg-tipawhite {
+    background-color: #f7f7f9;
 }
