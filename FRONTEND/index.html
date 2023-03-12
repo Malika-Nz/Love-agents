@@ -13,10 +13,16 @@
     <header>
         <nav class="navbar bg-body-tertiary">
             <div class="container-fluid">
-            <a class="twirl navbar-brand  d-flex align-items-center" href="#">
+            <a class="twirl navbar-brand  d-flex align-items-center" href="index.html">
                 <img src="logotype.svg" alt="Logo" width="50" height="45" class="d-inline-block align-text-top">
                 LA
             </a>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="knopka btn btn-primary">Войти</button>
+                    <button type="button" class="knopka btn btn-primary">Регистрация</button>
+                    <button type="submit" class="knopka btn btn-primary">Моя анкета</button>
+                    <button type="button" class="knopka btn btn-primary">Выход</button>
+                </div>
             </div>
         </nav>
     </header>
@@ -27,10 +33,13 @@
             <div class="mr-auto p-2">
                 <h1 class="name"><strong>Love Agents</strong></h1>
                 <h3 class="name">Найди свою вторую половинку</h3>
-                <h1 class="lead"><b>Наш сайт поможет вам найти вашу половинку и сделает вас счастливым!!!</b></h1>
+                <h1 class="lead p-2"><b>Заполняй анкету, знакомься и общайся с людьми</b></h1>
             </div>
             <div class="p-2">
-                <img class="rounded" src="https://proza.ru/photos/hidalen.jpg" alt="">
+                <img class="lubov rounded" src="https://proza.ru/photos/hidalen.jpg" alt="">
+            </div>
+            <div class="p-2">
+                <img class="lubov rounded" src="lubov.jpg" alt="">
             </div>
         </div>
 
@@ -38,7 +47,7 @@
             <div class="col-12 col-md-6">
                 <div class="bg-white p-4 mt-2 rounded regist-form">
                     <form id="registrationForm">
-                        <legend class="text-center bg-primary text-white p-2 mb-4">Регистрация</legend>
+                        <legend class="reg text-center p-2 mb-4">Регистрация</legend>
                         <div class="mb-3">
                             <select class="form-select" id="you_gender" name="gender[]" required>
                                 <option value ="">Укажите свой пол</option>
@@ -86,28 +95,49 @@
                 </div>
             </div>
             <div class="col-12 col-md-6 d-flex align-content-around flex-wrap">
-                <figure class="alert alert-light" role="alert">
+                <figure>
                     <blockquote class="blockquote">
-                      <p>Неразделенная любовь так же отличается от любви взаимной, как заблуждение от истины.</p>
+                        <div class="p-0 mt-0 mb-0">
+                            <img class="decor rounded mt-0 mb-0" src="uzor.png" alt="">
+                        </div>
                     </blockquote>
-                    <figcaption class="blockquote-footer">
-                        Жорж Санд
-                    </figcaption>
                 </figure>
                 <figure class="alert alert-light" role="alert">
                     <blockquote class="blockquote">
                       <p>Неразделенная любовь так же отличается от любви взаимной, как заблуждение от истины.</p>
                     </blockquote>
-                    <figcaption class="blockquote-footer">
+                    <figcaption class="autor blockquote-footer">
                         Жорж Санд
                     </figcaption>
                 </figure>
+                <figure>
+                    <blockquote class="blockquote">
+                        <div class="p-0 mt-0 mb-0">
+                            <img class="decor rounded mt-0 mb-0" src="uzor.png" alt="">
+                        </div>
+                    </blockquote>
+                </figure>
                 <figure class="alert alert-light" role="alert">
                     <blockquote class="blockquote">
-                      <p>Неразделенная любовь так же отличается от любви взаимной, как заблуждение от истины.</p>
+                      <p>Быть любимым — это больше, чем быть богатым, потому что быть любимым означает быть счастливым.</p>
                     </blockquote>
-                    <figcaption class="blockquote-footer">
-                        Жорж Санд
+                    <figcaption class="autor blockquote-footer">
+                        Клод Тилье
+                    </figcaption>
+                </figure>
+                <figure>
+                    <blockquote class="blockquote">
+                        <div class="p-0 mt-0 mb-0">
+                            <img class="decor rounded mt-0 mb-0" src="uzor.png" alt="">
+                        </div>
+                    </blockquote>
+                </figure>
+                <figure class="alert alert-light" role="alert">
+                    <blockquote class="blockquote">
+                      <p>Ты когда-нибудь чувствовал, что тебе не хватает того, кого ты никогда не встречал?</p>
+                    </blockquote>
+                    <figcaption class="autor blockquote-footer">
+                        Ричард Бах
                     </figcaption>
                 </figure>
             </div>
@@ -125,17 +155,17 @@
                 </a>
             </div>
             <div class="col-4">
-                <p><a href="#">Помощь</a></p>
-                <p><a href="#">Контакты</a></p>
-                <p><a href="#">Положение о защите персональных данных</a></p>
+                <p><a href="helpme.html">Помощь</a></p>
+                <p><a href="kontakts.html">Контакты</a></p>
+                <p><a href="protect.html">Положение о защите персональных данных</a></p>
             </div>
             <div class="col-4">
-                <p><a href="#">Пользовательское соглашение</a></p> 
-                <p><a href="#">Советы безопасности</a></p>
+                <p><a href="users.html">Пользовательское соглашение</a></p> 
+                <p><a href="security.html">Советы безопасности</a></p>
             </div>
         </div>
         <div class="bg-tipawhite p-3">
-            © Teamo.ru, 2010 – 2023 Знакомства для брака и серьезных отношений <br>
+            © LoveAgents.ru, Знакомства для брака и серьезных отношений <br>
             Сервис предназначен для лиц старше 18 лет
         </div>
     </footer>
