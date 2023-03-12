@@ -7,6 +7,7 @@ regForm = document.getElementById("registrationForm");
 // })
 regForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    console.log(new FormData(regForm));
 
     let response = await fetch('http://localhost:3333/signup', {
         method: 'POST',

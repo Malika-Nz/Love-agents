@@ -67,7 +67,7 @@ img.decor{
 }
 
 button.knopka{
-    width: 150px;
+    width: 140px;
     height: 40px;
     margin-right: 2%;
     border: 0;
@@ -80,4 +80,9 @@ b.kont{
 img.hearts{
     width: 350px;
     height: 200px;  
+}
+
+img.img-ava{
+    width: 350px;
+    height: 200px;   
 }
