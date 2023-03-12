@@ -5,6 +5,7 @@ body {
 h1.name {
     font-family: 'Times New Roman', Times, serif;
     font-size: 80px;
+    min-width: 500px;
     color: brown;
 }
 
@@ -74,4 +75,9 @@ button.knopka{
 
 b.kont{
     font-size: larger;
+}
+
+img.hearts{
+    width: 350px;
+    height: 200px;  
 }
