@@ -1,0 +1,78 @@
+<div class="container mb-5">
+    <div id="carouselExample" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="carousel-item active bg-secondary">
+            <!-- <img src="..." class="d-block w-100" alt="..."> -->
+            <div class="container-fluid w-75 d-flex justify-content-center p-4">
+                <div class="me-4">
+                    <img class="rounded img-ava border border-dark" src="https://rare-gallery.com/uploads/posts/1181480-monkey-apes-Orangutan-fauna-mammal-vertebrate-great-ape-primate-chimpanzee-common-chimpanzee.jpg" alt="">
+                    <button class="mt-3 btn btn-success" data-bs-toggle="modal" data-bs-target="#sendInviteModal">Пойти на свидание</button>
+                </div>
+                <div>
+                    <p><b>Семенов Михаил Иллюминатович</b></p>
+                    <p><b>23 года от Христа Христова</b></p>
+                    <p>Город:<br><b>Иерусалим</b></p>
+                    <p>О себе:<br><b>Я обезьяна! Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты. Страна использовало даже бросил текстами страну возвращайся путь силуэт рукописи, они меня власти жаренные взгляд сих. Но жизни деревни заголовок?</b></p>
+                </div>
+            </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Предыдущий</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Следующий</span>
+        </button>
+        </div>
+</div>
+
+
+    <!-- модальное окно - оформление письма -->
+<div class="modal fade" id="sendInviteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="sendInviteModalLabel">Оформление письма</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <form id="inviteForm">
+                    <legend class="reg text-center p-2 mb-4">Приглашение</legend>
+                    <div class="mb-3">
+                        <select class="form-select" name="place[]" required>
+                            <option value ="">Укажите наименование места</option>
+                            <option value="rest">Ресторан</option>
+                            <option value="park">Парк</option>
+                            <option value="kafe">Кафетерий</option>
+                            <option value="kino">Кинотеатр</option>
+                            <option value="teatr">Театр</option>
+                            <option value="another">Другое место</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="place" class="form-label">Точный адрес встречи</label>
+                        <input name="place" type="text" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Дата встречи</label>
+                        <input name="date" type="date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="time" class="form-label">Время встречи</label>
+                        <input name="time" type="time" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="place" class="form-label">Комментарий партнеру (необязательно для заполнения)</label>
+                        <textarea name="place" type="text" class="form-control"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отправить</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>

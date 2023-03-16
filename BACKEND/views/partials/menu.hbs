@@ -1,0 +1,20 @@
+<header>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+        <a class="twirl navbar-brand  d-flex align-items-center" href="/">
+            <img src="images/logotype.svg" alt="Logo" width="50" height="45" class="d-inline-block align-text-top">
+            LA
+        </a>
+            <div class="d-flex justify-content-end">
+                {{#unless user}}
+                <a href="spisok_ancket.html" class="knopka btn btn-primary">Войти</a>
+                <button type="button" class="knopka btn btn-primary">Регистрация</button>
+                {{/unless}}
+                {{#if user}}
+                <a href="my_ancket.html" class="knopka btn btn-primary">Моя анкета</a>
+                <button type="button" class="knopka btn btn-primary">Выход</button>
+                {{/if}}
+            </div>
+        </div>
+    </nav>
+</header>

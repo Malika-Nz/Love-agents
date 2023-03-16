@@ -1,0 +1,125 @@
+<div class="container mb-5">
+
+    <div class="d-flex">
+        <div class="mr-auto p-2">
+            <h1 class="name"><strong>Love Agents</strong></h1>
+            <h3 class="name">Найди свою вторую половинку</h3>
+            <div class="p-2">
+                <img class="hearts rounded" src="images/hearts.png" alt="">
+            </div>
+        </div>
+        <div class="p-2">
+            <img class="lubov rounded" src="https://proza.ru/photos/hidalen.jpg" alt="">
+        </div>
+        <div class="p-2">
+            <img class="lubov rounded" src="images/lubov.jpg" alt="">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="bg-white p-4 mt-2 rounded regist-form border border-warning">
+                <form id="registrationForm">
+                    <legend class="reg text-center p-2 mb-4">Регистрация</legend>
+                    <div class="mb-3">
+                        <select class="form-select" id="you_gender" name="gender[]" required>
+                            <option value ="">Укажите свой пол</option>
+                            <option value="male">Мужчина</option>
+                            <option value="female">Женщина</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <p><select class="form-select" name="gender_cand[]" required>
+                            <option value ="">Укажите пол партнера</option>
+                            <option value="male">Мужчина</option>
+                            <option value="female">Женщина</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">ФИО</label>
+                        <input name="fio" type="text" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Дата рождения</label>
+                        <input name="birthday" type="date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Город</label>
+                        <input name="city" type="text" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Почта</label>
+                        <input name="email" type="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Пароль</label>
+                        <input name="password" type="password" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Напишите о себе</label>
+                        <textarea name="about" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Ваш ник в телеграме</label>
+                        <input name="telegram" type="text" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Выберете фотографию</label>
+                        <input name="avatar" class="form-control" type="file" id="formFile" required>
+                        </div>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 d-flex align-content-around flex-wrap">
+            <figure>
+                <blockquote class="blockquote">
+                    <div class="p-0 mt-0 mb-0">
+                        <img class="decor rounded mt-0 mb-0" src="images/uzor.png" alt="">
+                    </div>
+                </blockquote>
+            </figure>
+            <figure class="alert alert-danger" role="alert">
+                <blockquote class="blockquote">
+                    <p>Неразделенная любовь так же отличается от любви взаимной, как заблуждение от истины.</p>
+                </blockquote>
+                <figcaption class="autor blockquote-footer">
+                    Жорж Санд
+                </figcaption>
+            </figure>
+            <figure>
+                <blockquote class="blockquote">
+                    <div class="p-0 mt-0 mb-0">
+                        <img class="decor rounded mt-0 mb-0" src="images/uzor.png" alt="">
+                    </div>
+                </blockquote>
+            </figure>
+            <figure class="alert alert-danger" role="alert">
+                <blockquote class="blockquote">
+                    <p>Быть любимым — это больше, чем быть богатым, потому что быть любимым означает быть счастливым.</p>
+                </blockquote>
+                <figcaption class="autor blockquote-footer">
+                    Клод Тилье
+                </figcaption>
+            </figure>
+            <figure>
+                <blockquote class="blockquote">
+                    <div class="p-0 mt-0 mb-0">
+                        <img class="decor rounded mt-0 mb-0" src="images/uzor.png" alt="">
+                    </div>
+                </blockquote>
+            </figure>
+            <figure class="alert alert-danger" role="alert">
+                <blockquote class="blockquote">
+                    <p>Ты когда-нибудь чувствовал, что тебе не хватает того, кого ты никогда не встречал?</p>
+                </blockquote>
+                <figcaption class="autor blockquote-footer">
+                    Ричард Бах
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+
+</div>
+
+<script src="scripts/registration.js"></script>

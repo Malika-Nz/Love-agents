@@ -1,0 +1,88 @@
+body {
+    background-color: blueviolet !important;
+}
+
+h1.name {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 80px;
+    min-width: 500px;
+    color: brown;
+}
+
+h3.name {
+    font-family: cursive;
+    color: brown;
+    margin-bottom: 50px;
+}
+
+h1.describe{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 70px;
+    color: rgb(0, 0, 0);
+}
+
+a.twirl {
+    font-size: 35px;
+    font-family: cursive;
+    text-decoration: none;
+    color: blueviolet;
+}
+
+.regist-form {
+    width: 403px;
+}
+
+.bg-tipawhite {
+    background-color: #f7f7f9;
+}
+
+h1.lead {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color:#a9203e;
+    color: bisque;
+    width: 482px;
+}
+
+legend.reg {
+    background-color: white; 
+    color: #a9203e;
+}
+
+button.btn {
+    background-color: #a9203e;
+}
+
+img.lubov{
+    width: 330px;
+    height: 320px;
+}
+
+figcaption.autor{
+    color: #a9203e;
+}
+
+img.decor{
+    width: 540px;
+    height: 100px;
+}
+
+button.knopka{
+    width: 140px;
+    height: 40px;
+    margin-right: 2%;
+    border: 0;
+}
+
+b.kont{
+    font-size: larger;
+}
+
+img.hearts{
+    width: 350px;
+    height: 200px;  
+}
+
+img.img-ava{
+    width: 350px;
+    height: 200px;   
+}
