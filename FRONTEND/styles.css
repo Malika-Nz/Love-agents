@@ -48,7 +48,7 @@ legend.reg {
     color: #a9203e;
 }
 
-button.btn {
+button.cvet {
     background-color: #a9203e;
 }
 
@@ -71,6 +71,7 @@ button.knopka{
     height: 40px;
     margin-right: 2%;
     border: 0;
+    background-color: #a9203e;
 }
 
 b.kont{
@@ -85,4 +86,17 @@ img.hearts{
 img.img-ava{
     width: 350px;
     height: 200px;   
+}
+
+nav.head{
+ background-color: white !important;
+ box-shadow: 2px 2px 3px rgba(0, 0, 0,0.4);
+}
+
+.car{
+    height: 400px;
+}
+
+.bg-anckets{
+    background-color: rgb(241, 209, 211);
 }

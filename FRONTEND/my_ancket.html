@@ -11,17 +11,25 @@
 <body class="bg-white">
 
     <header>
-        <nav class="navbar bg-body-tertiary">
+        <nav class="head navbar bg-body-tertiary mb-4">
             <div class="container-fluid">
             <a class="twirl navbar-brand  d-flex align-items-center" href="index.html">
                 <img src="logotype.svg" alt="Logo" width="50" height="45" class="d-inline-block align-text-top">
                 LA
             </a>
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="knopka btn btn-primary">Войти</button>
-                    <button type="button" class="knopka btn btn-primary">Регистрация</button>
-                    <a class="me-2" href="my_ancket.html"><button type="button" class="knopka btn btn-primary">Моя анкета</button></a>
-                    <button type="button" class="knopka btn btn-primary">Выход</button>
+                    <a class="me-2" href="spisok_ancket.html">
+                        <button type="button" class="knopka btn btn-dark">Войти</button>
+                    </a>
+                    <a class="me-2" href="index.html">
+                        <button type="button" class="knopka btn btn-dark">Регистрация</button>
+                    </a>
+                    <a class="me-2" href="my_ancket.html">
+                        <button type="button" class="knopka btn btn-dark">Моя анкета</button>
+                    </a>
+                    <a href="index.html">
+                        <button type="button" class="knopka btn btn-dark">Выход</button>
+                    </a>
                 </div>
             </div>
         </nav>
@@ -53,16 +61,16 @@
                     <input name="telegram" type="text" class="form-control" required>
                 </div>
                 <div class="d-flex">
-                    <button class="me-1 btn btn-primary">Сохранить</button>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Просмотреть анкету</button>
+                    <button class="me-1 btn btn-primary cvet">Сохранить</button>
+                    <button class="btn btn-primary cvet" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Просмотреть анкету</button>
                 </div> 
-                <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Сменить пароль</button>
+                <button class="btn btn-primary mt-2 cvet" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Сменить пароль</button>
             </div>
             
             <div class="col-8">
                 <div class="alert alert-primary d-flex align-items-center justify-content-between" role="alert">
                     <span>Вам пришло новое письмо!</span>
-                    <button class="mt-2 d-flex justify-content-end btn btn-secondary">Открыть</button>
+                    <button class="mt-2 d-flex justify-content-end btn btn-success">Открыть</button>
                 </div>
                 <div class="alert alert-secondary d-flex align-items-center justify-content-between" role="alert">
                     <span>Просмотрено</span>

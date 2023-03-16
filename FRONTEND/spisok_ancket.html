@@ -11,17 +11,25 @@
 <body class="bg-white">
 
     <header>
-        <nav class="navbar bg-body-tertiary">
+        <nav class="head navbar bg-body-tertiary mb-4">
             <div class="container-fluid">
             <a class="twirl navbar-brand  d-flex align-items-center" href="index.html">
                 <img src="logotype.svg" alt="Logo" width="50" height="45" class="d-inline-block align-text-top">
                 LA
             </a>
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="knopka btn btn-primary">Войти</button>
-                    <button type="button" class="knopka btn btn-primary">Регистрация</button>
-                    <a class="me-2" href="my_ancket.html"><button type="button" class="knopka btn btn-primary">Моя анкета</button></a>
-                    <button type="button" class="knopka btn btn-primary">Выход</button>
+                    <a class="me-2" href="spisok_ancket.html">
+                        <button type="button" class="knopka btn btn-dark">Войти</button>
+                    </a>
+                    <a class="me-2" href="index.html">
+                        <button type="button" class="knopka btn btn-dark">Регистрация</button>
+                    </a>
+                    <a class="me-2" href="my_ancket.html">
+                        <button type="button" class="knopka btn btn-dark">Моя анкета</button>
+                    </a>
+                    <a href="index.html">
+                        <button type="button" class="knopka btn btn-dark">Выход</button>
+                    </a>
                 </div>
             </div>
         </nav>
@@ -30,12 +38,12 @@
     <div class="container mb-5">
         <div id="carouselExample" class="carousel slide">
             <div class="carousel-inner">
-              <div class="carousel-item active bg-secondary">
+              <div class="carousel-item active bg-anckets">
                 <!-- <img src="..." class="d-block w-100" alt="..."> -->
-                <div class="container-fluid w-75 d-flex justify-content-center p-4">
+                <div class="container-fluid w-75 car d-flex justify-content-center p-4">
                     <div class="me-4">
                         <img class="rounded img-ava border border-dark" src="https://rare-gallery.com/uploads/posts/1181480-monkey-apes-Orangutan-fauna-mammal-vertebrate-great-ape-primate-chimpanzee-common-chimpanzee.jpg" alt="">
-                        <button class="mt-3 btn btn-success" data-bs-toggle="modal" data-bs-target="#sendInviteModal">Пойти на свидание</button>
+                        <button class="mt-3 btn btn-success cvet" data-bs-toggle="modal" data-bs-target="#sendInviteModal">Пойти на свидание</button>
                     </div>
                     <div>
                         <p><b>Семенов Михаил Иллюминатович</b></p>
@@ -99,8 +107,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отправить</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-success cvet" data-bs-dismiss="modal">Отправить</button>
+                <button type="button" class="btn btn-secondary cvet" data-bs-dismiss="modal">Закрыть</button>
             </div>
           </div>
         </div>
