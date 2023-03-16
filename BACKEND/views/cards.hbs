@@ -1,21 +1,22 @@
 <div class="container mb-5">
     <div id="carouselExample" class="carousel slide">
         <div class="carousel-inner">
+            {{#each users}}
             <div class="carousel-item active bg-secondary">
-            <!-- <img src="..." class="d-block w-100" alt="..."> -->
             <div class="container-fluid w-75 d-flex justify-content-center p-4">
                 <div class="me-4">
                     <img class="rounded img-ava border border-dark" src="https://rare-gallery.com/uploads/posts/1181480-monkey-apes-Orangutan-fauna-mammal-vertebrate-great-ape-primate-chimpanzee-common-chimpanzee.jpg" alt="">
                     <button class="mt-3 btn btn-success" data-bs-toggle="modal" data-bs-target="#sendInviteModal">Пойти на свидание</button>
                 </div>
                 <div>
-                    <p><b>Семенов Михаил Иллюминатович</b></p>
-                    <p><b>23 года от Христа Христова</b></p>
-                    <p>Город:<br><b>Иерусалим</b></p>
-                    <p>О себе:<br><b>Я обезьяна! Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты. Страна использовало даже бросил текстами страну возвращайся путь силуэт рукописи, они меня власти жаренные взгляд сих. Но жизни деревни заголовок?</b></p>
+                    <p><b>{{this.fio}}</b></p>
+                    <p><b>{{this.birthday}}</b></p>
+                    <p>Город:<br><b>{{this.city}}</b></p>
+                    <p>О себе:<br><b>{{this.about}}</b></p>
                 </div>
             </div>
             </div>
+            {{/each}}
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>

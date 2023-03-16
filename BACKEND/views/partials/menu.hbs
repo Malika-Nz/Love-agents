@@ -7,14 +7,44 @@
         </a>
             <div class="d-flex justify-content-end">
                 {{#unless user}}
-                <a href="spisok_ancket.html" class="knopka btn btn-primary">Войти</a>
+                <a href="spisok_ancket.html" class="knopka btn btn-primary" data-bs-toggle="modal" data-bs-target="#LoginModal">Войти</a>
                 <button type="button" class="knopka btn btn-primary">Регистрация</button>
                 {{/unless}}
                 {{#if user}}
                 <a href="my_ancket.html" class="knopka btn btn-primary">Моя анкета</a>
-                <button type="button" class="knopka btn btn-primary">Выход</button>
+                <a href="/logout" class="knopka btn btn-primary">Выход</a>
                 {{/if}}
             </div>
         </div>
     </nav>
 </header>
+
+    <!-- модальное окно - вход в действующий аккаунт -->
+<div class="modal fade" id="LoginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="LoginModalLabel">Вход в аккаунт</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <form id="LoginForm">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-mail</label>
+                        <input name="email" type="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Пароль</label>
+                        <input name="password" type="password" class="form-control" required>
+                    </div> 
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="LoginForm" class="btn btn-secondary">Войти</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="scripts/menu.js"></script>

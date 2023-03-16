@@ -33,11 +33,17 @@ hbs.registerPartials(__dirname + "/views/partials");
 
 // БД пользователей
 const users = {
-	'azat@mail.ru': {
-		email: 'azat@mail.ru',
-		password: 'password',
-		age: 21,
-	},
+	'Artem@111': {
+        gender: [ 'male' ],
+        gender_cand: [ 'female' ],
+        fio: 'Соколов Артём Мирославович',
+        birthday: '2023-03-03',
+        city: 'Сызрань',
+        email: 'Artem@111',
+        password: '1234',
+        about: 'Хочу серьезных отношений',
+        telegram: '@artem'
+      }
 }
 
 // словарь вида <ip>: <email>
@@ -52,15 +58,21 @@ app.get('/', (req, res) => {
     }
 });
 
-app.get('/reg', (_, res) => {
-    res.render('registration.hbs', {title: 'Регистрация'});
+app.get('/reg', (req, res) => {
+    let id = req.cookies['hola'];
+    let email = ids[id];
+    res.render('registration.hbs', {title: 'Регистрация', user: users[email]});
 });
 
 app.get('/cards', (req, res) => {
     let id = req.cookies['hola'];
     let email = ids[id];
+
+    let usersArray = Object.values(users).filter(user => user.email == email);
+    console.log(usersArray);
+
     if (email) {
-        res.render('cards.hbs', {user: users[email]});
+        res.render('cards.hbs', {user: users[email], users: usersArray});
     } else {
         res.redirect(301, '/reg');
     }
@@ -78,7 +90,7 @@ app.post('/signup', upload.single('avatar'), function(req, res) {
         return res.status(400).json({error: "Ошибка в дате рождения"})
     }
     if (!obj.password || obj.password.length < 4) {
-        return res.status(400).json({error: "Длина пароля более 4 символов"})
+        return res.status(400).json({error: "Длина пароля должна быть более 4 символов"})
     }
     if (ids[obj.email]) {
         return res.status(400).json({error: "Пользователь уже существует"})
@@ -90,6 +102,33 @@ app.post('/signup', upload.single('avatar'), function(req, res) {
 
     res.cookie('hola', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
     res.status(201).json({id});
+});
+
+app.post('/login', function(req, res) {
+    const { email, password } = req.body;
+
+    if (!email) {
+        return res.status(400).json({error: "Пустая почта"})
+    }
+    if (!password) {
+        return res.status(400).json({error: "Пустой пароль"})
+    }
+    if (!users[email] || users[email].password !== password) {
+        return res.status(400).json({error: "Пользователь не найден"})
+    }
+
+    const id = uuid();
+    ids[id] = email;
+
+    res.cookie('hola', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
+    res.status(200).json({id});
+});
+
+app.post('/logout', function(req, res) {
+    const id = req.cookies['hola'];
+    
+    res.clearCookie('hola');
+    return res.redirect(304, '/');
 });
 
 app.get('/me', function (req, res) {
