@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar bg-body-tertiary">
+    <nav class="head navbar bg-body-tertiary mb-4">
         <div class="container-fluid">
         <a class="twirl navbar-brand  d-flex align-items-center" href="/">
             <img src="images/logotype.svg" alt="Logo" width="50" height="45" class="d-inline-block align-text-top">
@@ -7,11 +7,11 @@
         </a>
             <div class="d-flex justify-content-end">
                 {{#unless user}}
-                <a href="#" class="knopka btn btn-primary" data-bs-toggle="modal" data-bs-target="#LoginModal">Войти</a>
+                <a href="#" class="knopka btn text-light" data-bs-toggle="modal" data-bs-target="#LoginModal">Войти</a>
                 {{/unless}}
                 {{#if user}}
-                <a href="/my_ancket" class="knopka btn btn-primary">Моя анкета</a>
-                <a href="#" id="logoutButton" class="knopka btn btn-primary">Выход</a>
+                <a href="/my_ancket" class="knopka btn text-light">Моя анкета</a>
+                <a href="#" id="logoutButton" class="knopka btn text-light">Выход</a>
                 {{/if}}
             </div>
         </div>
@@ -39,8 +39,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="LoginForm" class="btn btn-secondary">Войти</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="submit" form="LoginForm" class="btn knopka text-light">Войти</button>
+                <button type="button" class="btn knopka text-light" data-bs-dismiss="modal">Закрыть</button>
             </div>
         </div>
     </div>

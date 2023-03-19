@@ -10,7 +10,7 @@ loginForm.addEventListener('submit', async (e) => {
         });
 
         if (response.ok) {
-            window.location.href = '/';
+            window.location.href = '/cards';
             return;
         }
 
