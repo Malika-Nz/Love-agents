@@ -100,3 +100,19 @@ nav.head{
 .bg-anckets{
     background-color: rgb(241, 209, 211);
 }
+
+.container {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.top-right {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+}
+
+p.text-pisma{
+    font-family: cursive;
+}
