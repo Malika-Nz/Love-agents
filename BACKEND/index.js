@@ -57,22 +57,6 @@ const users = {
     },
 }
 
-// users => create table postgres:
-```
-create table users (
-    id serial primary key,
-    gender varchar(255) not null,
-    fio varchar(255) not null,
-    birthday date not null,
-    city varchar(255) not null,
-    email varchar(255) not null,
-    password varchar(255) not null,
-    about varchar(255) not null,
-    telegram varchar(255) not null
-    avatar varchar(255) not null
-);
-```
-
 // словарь вида <ip>: <email>
 ids = {}
 
@@ -109,6 +93,17 @@ app.get('/cards', (req, res) => {
     return res.render('cards.hbs', {user: users[email], users: usersArray});
 });
 
+app.get('/my_ancket', (req, res) => {
+    let id = req.cookies['hola'];
+    let email = ids[id];
+    
+    if (!email) {
+        return res.redirect(301, '/reg');
+    }
+
+    return res.render('my_ancket.hbs', {user: users[email]});
+});
+
 app.post('/signup', upload.single('avatar'), function(req, res) {
     const obj = JSON.parse(JSON.stringify(req.body));
     const avatar = req.file;
@@ -136,7 +131,7 @@ app.post('/signup', upload.single('avatar'), function(req, res) {
 
     ids[id] = obj.email;
 
-    res.cookie('hola', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
+    res.cookie('hola', id, {expires: new Date(Date.now() + 1000 * 60 * 60 * 24)});
     res.status(201).json({id});
 });
 
@@ -157,7 +152,7 @@ app.post('/login', upload.none(), function(req, res) {
     const id = uuid();
     ids[id] = email;
 
-    res.cookie('hola', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
+    res.cookie('hola', id, {expires: new Date(Date.now() + 1000 * 60 * 60 * 24)});
     res.status(200).json({id});
 });
 
