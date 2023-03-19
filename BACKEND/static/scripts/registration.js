@@ -5,7 +5,6 @@ regForm.addEventListener('submit', async (e) => {
     console.log(regForm);
     console.log(new FormData(regForm));
 
-    let body;
     fetch('http://localhost:3333/signup', {
         method: 'POST',
         body: new FormData(regForm)
@@ -15,7 +14,12 @@ regForm.addEventListener('submit', async (e) => {
             return;
         }
         return res.json();
-    }).then(res => {
-        alert(res.error);
+    }).then(data => {
+        if (data) {
+            alert(data.error);
+        }
+    }).catch(err => {
+        console.error(err);
+        alert('Ошибка запроса');
     })
 })

@@ -2,19 +2,48 @@ loginForm = document.getElementById("LoginForm");
 
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    console.log(new FormData(loginForm));
 
-    let body;
-    fetch('http://localhost:3333/login', {
-        method: 'POST',
-        body: new FormData(loginForm)
-    }).then(res => {
-        if (res.status === 200) {
+    try {
+        const response = await fetch('/login', {
+            method: 'POST',
+            body: new FormData(loginForm)
+        });
+
+        if (response.ok) {
             window.location.href = '/';
             return;
         }
-        return res.json();
-    }).then(res => {
-        alert(res.error);
-    })
-})
+
+        const errorData = await response.json();
+        alert(errorData.error);
+    } catch (error) {
+        console.error(error);
+        alert('Ошибка запроса');
+    }
+});
+
+const logoutButton = document.getElementById("logoutButton");
+
+if (logoutButton) {
+    logoutButton.addEventListener('click', async (e) => {
+        e.preventDefault();
+        console.log(1);
+
+        try {
+            const response = await fetch('/logout', {
+                method: 'POST'
+            });
+
+            if (response.ok) {
+                window.location.href = '/';
+                return;
+            }
+
+            const errorData = await response.json();
+            alert(errorData.error);
+        } catch (error) {
+            console.error(error);
+            alert('Ошибка запроса');
+        }
+    });
+}

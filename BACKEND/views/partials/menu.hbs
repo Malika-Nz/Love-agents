@@ -7,19 +7,18 @@
         </a>
             <div class="d-flex justify-content-end">
                 {{#unless user}}
-                <a href="spisok_ancket.html" class="knopka btn btn-primary" data-bs-toggle="modal" data-bs-target="#LoginModal">Войти</a>
-                <button type="button" class="knopka btn btn-primary">Регистрация</button>
+                <a href="#" class="knopka btn btn-primary" data-bs-toggle="modal" data-bs-target="#LoginModal">Войти</a>
                 {{/unless}}
                 {{#if user}}
-                <a href="my_ancket.html" class="knopka btn btn-primary">Моя анкета</a>
-                <a href="/logout" class="knopka btn btn-primary">Выход</a>
+                <a href="/my_ancket" class="knopka btn btn-primary">Моя анкета</a>
+                <a href="#" id="logoutButton" class="knopka btn btn-primary">Выход</a>
                 {{/if}}
             </div>
         </div>
     </nav>
 </header>
 
-    <!-- модальное окно - вход в действующий аккаунт -->
+<!-- модальное окно - вход в действующий аккаунт -->
 <div class="modal fade" id="LoginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -31,11 +30,11 @@
                 <form id="LoginForm">
                     <div class="mb-3">
                         <label for="email" class="form-label">E-mail</label>
-                        <input name="email" type="email" class="form-control" required>
+                        <input name="email" type="email" class="form-control" required value="Artem@111">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Пароль</label>
-                        <input name="password" type="password" class="form-control" required>
+                        <input name="password" type="password" class="form-control" required value="1234">
                     </div> 
                 </form>
             </div>
