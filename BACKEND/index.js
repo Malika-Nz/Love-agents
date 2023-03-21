@@ -1,7 +1,6 @@
 const express = require('express');
 const cookie = require('cookie-parser');
 const morgan = require('morgan');
-const uuid = require('uuid').v4;
 const path = require('path');
 const handlebars = require('express-handlebars');
 const hbs = require("hbs");
@@ -31,38 +30,12 @@ app.engine("hbs", handlebars.engine(
 app.set("view engine", "hbs");
 hbs.registerPartials(path.join(__dirname, "/views/partials"));
 
-// БД пользователей
-const users = {
-	'Artem@111': {
-        gender: [ 'male' ],
-        gender_cand: [ 'female' ],
-        fio: 'Соколов Артём Мирославович',
-        birthday: '2023-03-03',
-        city: 'Сызрань',
-        email: 'Artem@111',
-        password: '1234',
-        about: 'Хочу серьезных отношений',
-        telegram: '@artem'
-    },
-    'Ivan@111': {
-        gender: [ 'male' ],
-        gender_cand: [ 'female' ],
-        fio: 'Иванов Иван Иванович',
-        birthday: '2023-03-03',
-        city: 'Сызрань',
-        email: 'Ivan@111',
-        password: '1234',
-        about: 'Не хочу серьезных отношений',
-        telegram: '@ivan',
-    },
-}
-
-// словарь вида <ip>: <email>
-ids = {}
+// подключаемся к БД
+const User = require('./models/user');
 
 app.get('/', (req, res) => {
-    let id = req.cookies['hola'];
-    if (ids[id]) {
+    let email = req.cookies['hola'];
+    if (email) {
         res.redirect(301, '/cards');
     } else {
         res.redirect(301, '/reg');
@@ -70,43 +43,56 @@ app.get('/', (req, res) => {
 });
 
 app.get('/reg', (req, res) => {
-    let id = req.cookies['hola'];
-    let email = ids[id];
+    let email = req.cookies['hola'];
 
     if (email) {
         return res.redirect(301, '/cards');
     }
 
-    return res.render('registration.hbs', {title: 'Регистрация', user: users[email]});
+    return res.render('registration.hbs', {title: 'Регистрация'});
 });
 
-app.get('/cards', (req, res) => {
-    let id = req.cookies['hola'];
-    let email = ids[id];
-
-    let usersArray = Object.values(users).filter(user => user.email !== email);
+app.get('/cards', async (req, res) => {
+    let email = req.cookies['hola'];
 
     if (!email) {
         return res.redirect(301, '/reg');
     }
 
-    return res.render('cards.hbs', {user: users[email], users: usersArray});
+    const user = await User.getOne(email);
+
+    // получаем всех пользователей, кроме текущего и тех, кого он хочет видеть
+    let usersArray = await User.getAll();
+    usersArray = usersArray.filter(u => u.email !== email);
+    usersArray = usersArray.filter(u => u.gender === user.gender_cand);
+    usersArray[0].active = true;
+
+    // из даты рождения получаем возраст
+    let today = new Date();
+    usersArray = usersArray.map(u => {
+        u.birthday = today.getFullYear() - u.birthday.getFullYear();
+        return u;
+    });
+
+    return res.render('cards.hbs', {user: user, users: usersArray});
 });
 
-app.get('/my_ancket', (req, res) => {
-    let id = req.cookies['hola'];
-    let email = ids[id];
+app.get('/my_ancket', async (req, res) => {
+    let email = req.cookies['hola'];
     
     if (!email) {
         return res.redirect(301, '/reg');
     }
 
-    return res.render('my_ancket.hbs', {user: users[email]});
+    const user = await User.getOne(email);
+    let today = new Date();
+    user.birthday = today.getFullYear() - user.birthday.getFullYear();
+
+    return res.render('my_ancket.hbs', {user: user});
 });
 
-app.post('/signup', upload.single('avatar'), function(req, res) {
+app.post('/signup', upload.single('avatar'), async function(req, res) {
     const obj = JSON.parse(JSON.stringify(req.body));
-    const avatar = req.file;
     
     if (!obj.fio) {
         return res.status(400).json({error: "Ошибка в имени пользователя"})
@@ -117,25 +103,35 @@ app.post('/signup', upload.single('avatar'), function(req, res) {
     if (!obj.password || obj.password.length < 4) {
         return res.status(400).json({error: "Длина пароля должна быть более 4 символов"})
     }
-    if (ids[obj.email]) {
-        return res.status(400).json({error: "Пользователь уже существует"})
+    
+    let today = new Date();
+    let birthday = new Date(obj.birthday);
+    console.log(today.getFullYear() - birthday.getFullYear(), birthday);
+    if (today.getFullYear() - birthday.getFullYear() < 18) {
+        return res.status(400).json({error: "Возраст должен быть более 18 лет"})
     }
 
-    const id = uuid();
+    const user_email = await User.getOne(obj.email);
+    if (user_email) {
+        return res.status(400).json({error: "Пользователь c таким email уже существует"})
+    }
 
-    users[obj.email] = obj;
+    const user = obj;
 
-    let arrayBuffer = avatar.buffer;
-    let base64String = Buffer.from(arrayBuffer).toString('base64');
-    users[obj.email].avatar = base64String;
+    let avatar = req.file.buffer;
+    let base64String = Buffer.from(avatar).toString('base64');
+    user.avatar = 'data:image/jpeg;base64,' + base64String;
 
-    ids[id] = obj.email;
+    user.gender = user.gender.toString();
+    user.gender_cand = user.gender_cand.toString();
+    
+    await User.create(user);
 
-    res.cookie('hola', id, {expires: new Date(Date.now() + 1000 * 60 * 60 * 24)});
-    res.status(201).json({id});
+    res.cookie('hola', user.email, {expires: new Date(Date.now() + 1000 * 60 * 60 * 24)});
+    res.status(201).end();
 });
 
-app.post('/login', upload.none(), function(req, res) {
+app.post('/login', upload.none(), async function(req, res) {
     const obj = JSON.parse(JSON.stringify(req.body));
     const { email, password } = obj;
 
@@ -145,39 +141,110 @@ app.post('/login', upload.none(), function(req, res) {
     if (!password) {
         return res.status(400).json({error: "Пустой пароль"})
     }
-    if (!users[email] || users[email].password !== password) {
+
+    const user = await User.getOne(email);
+
+    if (!user || user.password !== password) {
         return res.status(400).json({error: "Пользователь не найден"})
     }
 
-    const id = uuid();
-    ids[id] = email;
-
-    res.cookie('hola', id, {expires: new Date(Date.now() + 1000 * 60 * 60 * 24)});
-    res.status(200).json({id});
+    res.cookie('hola', email, {expires: new Date(Date.now() + 1000 * 60 * 60 * 24)});
+    res.status(200).end();
 });
 
-app.post('/logout', function(req, res) {
-    const id = req.cookies['hola'];
-    const email = ids[id];
+app.get('/logout', async function(req, res) {
+    const email = req.cookies['hola'];
+    res.clearCookie('hola');
+    // res.redirect(301, '/reg');
+    res.json({email});
+});
+
+app.post('/logout', async function(req, res) {
+    const email = req.cookies['hola'];
+
+    const user = await User.getOne(email);
     
-    if (!email || !users[email]) {
+    if (!email || !user) {
         return res.status(400).json({error: "Пользователь не найден"})
     }
-
-    delete ids[id];
     
     res.clearCookie('hola');
     return res.status(200).end();
 });
 
-app.get('/me', function (req, res) {
-    let id = req.cookies['hola'];
-    let email = ids[id];
-    if (!email || !users[email]) {
+app.post('/update', upload.single('avatar'), async function(req, res) {
+    const obj = JSON.parse(JSON.stringify(req.body));
+    const email = req.cookies['hola'];
+
+    if (!email) {
+        return res.status(400).json({error: "Пользователь не найден"})
+    }
+    if (!obj.fio) {
+        return res.status(400).json({error: "Ошибка в имени пользователя"})
+    }
+    if (!obj.city) {
+        return res.status(400).json({error: "Ошибка в городе"})
+    }
+    if (!obj.about) {
+        return res.status(400).json({error: "Ошибка в описании"})
+    }
+    if (!obj.telegram) {
+        return res.status(400).json({error: "Ошибка в телеграмме"})
+    }
+
+    if (req.file) {
+        let avatar = req.file.buffer;
+        let base64String = Buffer.from(avatar).toString('base64');
+        obj.avatar = 'data:image/jpeg;base64,' + base64String;
+    }
+
+    const user = await User.getOne(email);
+    if (!user) {
+        return res.status(400).json({error: "Пользователь не найден"})
+    }
+
+    await User.update(email, obj);
+
+    res.status(200).end();
+});
+
+app.post('/update_password', upload.none(), async function(req, res) {
+    const obj = JSON.parse(JSON.stringify(req.body));
+    const email = req.cookies['hola'];
+
+    if (!email) {
+        return res.status(400).json({error: "Пользователь не найден"})
+    }
+
+    const user = await User.getOne(email);
+    if (!user) {
+        return res.status(400).json({error: "Пользователь не найден"})
+    }
+    if (obj.password !== user.password) {
+        return res.status(400).json({error: "Неверный пароль"})
+    }
+    if (!obj.new_password || obj.new_password.length < 4) {
+        return res.status(400).json({error: "Длина нового пароля должна быть более 4 символов"})
+    }
+    if (obj.password === obj.new_password) {
+        return res.status(400).json({error: "Новый пароль должен отличаться от старого"})
+    }
+
+    User.updatePassword(email, obj.new_password);
+
+    res.status(200).end();
+});
+
+app.get('/me', async function (req, res) {
+    let email = req.cookies['hola'];
+
+    const user = await User.getOne(email);
+
+    if (!email || !user) {
         return res.status(401).end();
     }
 
-    res.json(users[email]);
+    res.json(user);
 });
 
 app.listen(3333, () => {
