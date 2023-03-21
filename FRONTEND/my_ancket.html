@@ -70,7 +70,7 @@
             <div class="col-8">
                 <div class="alert alert-primary d-flex align-items-center justify-content-between" role="alert">
                     <span>Вам пришло новое письмо!</span>
-                    <button class="mt-2 d-flex justify-content-end btn btn-success">Открыть</button>
+                    <a class="mt-2 d-flex justify-content-end btn btn-success" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Открыть</a>
                 </div>
                 <div class="alert alert-secondary d-flex align-items-center justify-content-between" role="alert">
                     <span>Просмотрено</span>
@@ -81,6 +81,72 @@
         </div>
     </div>
 
+    <!-- Письмо - модальное окно -->
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Приглашение</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="container">
+                    <img src="priglashenie.jpg" alt="" style="width:100%;">
+                    <div class="top-right p-1">
+                        <img src="lubov.jpg" width="150px" height="150px" alt="">
+                        <p class="text-pisma p-2">Зубенко Михаил Петрович
+                            <br>Возраст: 24
+                            <br>Хочу серьезных отношений
+                        </p>
+                        <p class="text-pisma p-2">Наименование места: Театр
+                            <br> Точный адрес встречи: г.Екатеринбург, Свердловская обл., улица Северодвинская, театр "Имени Салтыкова"
+                            <br>Дата встречи: 06.05.2023
+                            <br>Время:18:00
+                            <br>Комментарий: я буду в зеленой футболке и синих джинсах. Надеюсь, ты согласишься прийти. С меня бутылка водки и шашлыки)
+                        </p>
+                    </div>
+                  </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Согласиться</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Пожалуйста, произведите оплату</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+              Скройте это модальное окно и покажите первое с помощью кнопки ниже.
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">Далее</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel3" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel3">Успешно</h1>
+              <button type="button" class="btn-close" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+              Скройте это модальное окно и покажите первое с помощью кнопки ниже.
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary"  data-bs-toggle="modal">Закрыть</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      
     <!-- сменить пароль - модальное окно -->
     <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
         <div class="modal-dialog">
