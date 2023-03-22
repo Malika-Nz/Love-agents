@@ -1,3 +1,5 @@
 */node_modules
 
 /node_modules
+
+BACKEND/models/config.js
