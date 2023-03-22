@@ -109,6 +109,7 @@
             </div>
             <div class="modal-footer">
               <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Согласиться</button>
+              <button class="btn btn-primary" data-bs-toggle="modal">Отказаться</button>
             </div>
           </div>
         </div>
@@ -117,11 +118,22 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Пожалуйста, произведите оплату</h1>
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Пожалуйста, произведите оплату (сумма 15 рублей)</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-              Скройте это модальное окно и покажите первое с помощью кнопки ниже.
+              <div class="mb-3">
+                <label for="disabledTextInput" class="form-label">Номер карты</label>
+                <input name="num_kart" type="text" class="form-control" maxlength="16" required>
+              </div>
+              <div class="mb-3">
+               <label for="disabledTextInput" class="form-label">Дата на карте</label>
+                <input name="dat_kart" type="month" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="disabledTextInput" class="form-label">CVV код</label>
+                <input name="cvv_kart" type="number" class="form-control" required>
+              </div>
             </div>
             <div class="modal-footer">
               <button class="btn btn-primary" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">Далее</button>
@@ -137,7 +149,9 @@
               <button type="button" class="btn-close" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-              Скройте это модальное окно и покажите первое с помощью кнопки ниже.
+              <p>Желаю вам прекрасного свидания, спасибо за использование услуг нашего сайта!</p>
+              <p>Для связи</p>
+              <span>Ник в телеграме партнера: @something</span>
             </div>
             <div class="modal-footer">
               <button class="btn btn-primary"  data-bs-toggle="modal">Закрыть</button>
