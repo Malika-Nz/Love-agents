@@ -9,7 +9,7 @@ regForm.addEventListener('submit', async (e) => {
         method: 'POST',
         body: new FormData(regForm)
     }).then(res => {
-        if (res.status === 201) {
+        if (res.ok) {
             window.location.href = 'cards';
             return;
         }

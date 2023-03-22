@@ -2,29 +2,31 @@
         <h3 class="d-flex justify-content-center mt-5 mb-3">МОЯ АНКЕТА</h3>
         <div class="row bg-white">
             <div class="col-4 border border-warning p-4">
-                <img class="rounded img-fluid border border-dark" src="https://rare-gallery.com/uploads/posts/1181480-monkey-apes-Orangutan-fauna-mammal-vertebrate-great-ape-primate-chimpanzee-common-chimpanzee.jpg" alt="">
-                <div class="mb-3">
-                    <label for="formFile" class="form-label">Сменить фото</label>
-                    <input name="picture" class="form-control" type="file" id="formFile" required >
-                </div>
-                <div class="mb-3">
-                    <label for="disabledTextInput" class="form-label">Сменить ФИО</label>
-                    <input name="fio" type="text" class="form-control" value="{{user.fio}}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="disabledTextInput" class="form-label">Сменить город</label>
-                    <input name="gorod" type="text" class="form-control" value="{{user.city}}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">Сменить информацию о себе</label>
-                    <textarea name="about" class="form-control" id="exampleFormControlTextarea1" rows="3" required>{{user.about}}</textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="disabledTextInput" class="form-label">Сменить ник в телеграме</label>
-                    <input name="telegram" type="text" class="form-control" value="{{user.telegram}}" required>
-                </div>
+                <img class="rounded img-fluid border border-dark" src="{{user.avatar}}" alt="">
+                <form id="updateProfile">
+                  <div class="mb-3">
+                      <label for="formFile" class="form-label">Сменить фото</label>
+                      <input name="avatar" class="form-control" type="file" id="formFile" >
+                  </div>
+                  <div class="mb-3">
+                      <label for="disabledTextInput" class="form-label">Сменить ФИО</label>
+                      <input name="fio" type="text" class="form-control" value="{{user.fio}}" required>
+                  </div>
+                  <div class="mb-3">
+                      <label for="disabledTextInput" class="form-label">Сменить город</label>
+                      <input name="city" type="text" class="form-control" value="{{user.city}}" required>
+                  </div>
+                  <div class="mb-3">
+                      <label for="exampleFormControlTextarea1" class="form-label">Сменить информацию о себе</label>
+                      <textarea name="about" class="form-control" id="exampleFormControlTextarea1" rows="3" required>{{user.about}}</textarea>
+                  </div>
+                  <div class="mb-3">
+                      <label for="disabledTextInput" class="form-label">Сменить ник в телеграме</label>
+                      <input name="telegram" type="text" class="form-control" value="{{user.telegram}}" required>
+                  </div>
+                </form>
                 <div class="d-flex">
-                    <button class="me-1 btn btn-primary cvet">Сохранить</button>
+                    <button class="me-1 btn btn-primary cvet" form="updateProfile">Сохранить</button>
                     <button class="btn btn-primary cvet" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Просмотреть анкету</button>
                 </div> 
                 <button class="btn btn-primary mt-2 cvet" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Сменить пароль</button>
@@ -54,23 +56,25 @@
             </div>
             <div class="modal-body">
                 <div class="row bg-white">
-                    <div class="mb-3">
-                        <label for="disabledTextInput" class="form-label">Старый пароль</label>
-                        <input name="password" type="password" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="disabledTextInput" class="form-label">Новый пароль</label>
-                        <input name="password" type="password" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="disabledTextInput" class="form-label">Введите повторно новый пароль</label>
-                        <input name="password" type="password" class="form-control" required>
-                    </div>
+                    <form id="updatePassword">
+                      <div class="mb-3">
+                          <label for="disabledTextInput" class="form-label">Старый пароль</label>
+                          <input name="password" type="password" class="form-control" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="disabledTextInput" class="form-label">Новый пароль</label>
+                          <input name="new_password" type="password" class="form-control" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="disabledTextInput" class="form-label">Введите повторно новый пароль</label>
+                          <input name="confirm_password" type="password" class="form-control" required>
+                      </div>
+                    </form>
                 </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-              <button type="button" class="btn btn-primary">Сохранить изменения</button>
+              <button type="submit" class="btn btn-primary" form="updatePassword">Сохранить изменения</button>
             </div>
           </div>
         </div>
@@ -85,12 +89,12 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-                <img class="rounded img-fluid border border-dark mb-3" src="https://rare-gallery.com/uploads/posts/1181480-monkey-apes-Orangutan-fauna-mammal-vertebrate-great-ape-primate-chimpanzee-common-chimpanzee.jpg" alt="">
+                <img class="rounded img-fluid border border-dark mb-3" src="{{user.avatar}}" alt="">
                 <div>
-                    <p>Семенов Михаил Иллюминатович</p>
-                    <p>23 года от Христа Христова</p>
-                    <p><b>Город:</b><br> Иерусалим</p>
-                    <p><b>О себе:</b><br> Я обезьяна! Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты. Страна использовало даже бросил текстами страну возвращайся путь силуэт рукописи, они меня власти жаренные взгляд сих. Но жизни деревни заголовок?</p>
+                    <p>{{user.fio}}</p>
+                    <p><b>Возраст:</b> {{user.birthday}} </p>
+                    <p><b>Город:</b><br> {{user.city}} </p>
+                    <p><b>О себе:</b><br> {{user.about}} </p>
                 </div>
             </div>
             <div class="modal-footer">
@@ -99,3 +103,5 @@
           </div>
         </div>
       </div>
+
+    <script src="scripts/my_ancket.js"></script>
