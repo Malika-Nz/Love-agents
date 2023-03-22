@@ -1,11 +1,7 @@
+const data = require('./config.js');
+
 const pgp = require('pg-promise')();
-const db = pgp({
-    user: 'root',
-    host: 'localhost',
-    database: 'love_agents',
-    password: 'root',
-    port: 5432,
-});
+const db = pgp(data);
 
 class User {
   static async getAll() {

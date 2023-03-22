@@ -4,11 +4,11 @@
             {{#each users}}
             <div class="carousel-item {{#if this.active}}active{{/if}} bg-secondary">
             <div class="container-fluid w-75 d-flex justify-content-center p-4">
-                <div class="me-4">
+                <div class="me-4 row">
                     <img class="rounded img-ava border border-dark" src="{{this.avatar}}" alt="">
                     <button class="mt-3 btn btn-success" data-bs-toggle="modal" data-bs-target="#sendInviteModal">Пойти на свидание</button>
                 </div>
-                <div>
+                <div class="text-light">
                     <p><b>{{this.fio}}</b></p>
                     <p>Возраст: <b>{{this.birthday}}</b></p>
                     <p>Город:<br><b>{{this.city}}</b></p>
