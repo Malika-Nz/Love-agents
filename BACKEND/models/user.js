@@ -1,7 +1,4 @@
-const data = require('./config.js');
-
-const pgp = require('pg-promise')();
-const db = pgp(data);
+const db = require('./config.js');
 
 class User {
   static async getAll() {
@@ -10,6 +7,10 @@ class User {
 
   static async getOne(email) {
     return db.oneOrNone('SELECT * FROM users WHERE email = $1', email);
+  }
+
+  static async getOneById(id) {
+    return db.oneOrNone('SELECT * FROM users WHERE id = $1', id);
   }
 
   static async create(data) {

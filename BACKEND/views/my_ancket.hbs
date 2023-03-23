@@ -30,13 +30,96 @@
                     <button class="btn btn-primary cvet" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Просмотреть анкету</button>
                 </div> 
                 <button class="btn btn-primary mt-2 cvet" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Сменить пароль</button>
+                <button class="btn btn-primary mt-2 cvet" onclick="ArchivateAccount();">Удалить аккаунт</button>
             </div>
             
             <div class="col-8">
+                {{#each letters_received}}
                 <div class="alert alert-primary d-flex align-items-center justify-content-between" role="alert">
                     <span>Вам пришло новое письмо!</span>
-                    <button class="mt-2 d-flex justify-content-end btn btn-success">Открыть</button>
+                    <button class="mt-2 d-flex justify-content-end btn btn-success" data-bs-toggle="modal" href="#InboxModal{{this.id}}" role="button">Открыть</button>
                 </div>
+
+                <!-- Письмо - модальное окно -->
+                <div class="modal fade" id="InboxModal{{this.id}}" aria-hidden="true" aria-labelledby="InboxModal{{this.id}}Label" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="InboxModal{{this.id}}Label">Приглашение</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                        </div>
+                        <div class="modal-body p-0">
+                            <div class="container">
+                                <img src="priglashenie.jpg" alt="" style="width:100%;">
+                                <div class="top-right p-1">
+                                    <img src="lubov.jpg" width="150px" height="150px" alt="">
+                                    <p class="text-pisma p-2">{{this.sender.fio}}
+                                        <br>Возраст: {{this.sender.birthday}}
+                                        <br>Город: {{this.sender.city}}
+                                        <br>Информация о себе: {{this.sender.about}}
+                                    </p>
+                                    <p class="text-pisma p-2">Наименование места: {{this.place}}
+                                        <br> Точный адрес встречи: {{this.address}}
+                                        <br>Дата встречи: {{this.meet_date}}
+                                        <br>Время: {{this.meet_time}}
+                                        <br>Комментарий: {{this.body}}
+                                    </p>
+                                </div>
+                              </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Согласиться</button>
+                          <button class="btn btn-primary" data-bs-toggle="modal">Отказаться</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Пожалуйста, произведите оплату (сумма 15 рублей)</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">Номер карты</label>
+                            <input name="num_kart" type="text" class="form-control" maxlength="16" required>
+                          </div>
+                          <div class="mb-3">
+                          <label for="disabledTextInput" class="form-label">Дата на карте</label>
+                            <input name="dat_kart" type="month" class="form-control" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">CVV код</label>
+                            <input name="cvv_kart" type="number" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-primary" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">Далее</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel3" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalToggleLabel3">Успешно</h1>
+                          <button type="button" class="btn-close" aria-label="Закрыть"></button>
+                        </div>
+                        <div class="modal-body">
+                          <p>Желаю вам прекрасного свидания, спасибо за использование услуг нашего сайта!</p>
+                          <p>Для связи</p>
+                          <span>Ник в телеграме партнера: @something</span>
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-primary"  data-bs-toggle="modal">Закрыть</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {{/each}}
                 <div class="alert alert-secondary d-flex align-items-center justify-content-between" role="alert">
                     <span>Просмотрено</span>
                     <button class="mt-2 d-flex justify-content-end btn btn-secondary">Открыть</button>

@@ -2,7 +2,7 @@
     <div id="carouselExample" class="carousel slide">
         <div class="carousel-inner">
             {{#each users}}
-            <div class="carousel-item {{#if this.active}}active{{/if}} bg-secondary">
+            <div id="{{this.id}}" class="carousel-item {{#if this.active}}active{{/if}} bg-secondary">
             <div class="container-fluid w-75 d-flex justify-content-center p-4">
                 <div class="me-4 row">
                     <img class="rounded img-ava border border-dark" src="{{this.avatar}}" alt="">
@@ -53,27 +53,29 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="place" class="form-label">Точный адрес встречи</label>
-                        <input name="place" type="text" class="form-control" required>
+                        <label for="address" class="form-label">Точный адрес встречи</label>
+                        <input name="address" type="text" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label for="date" class="form-label">Дата встречи</label>
-                        <input name="date" type="date" class="form-control" required>
+                        <label for="meet_date" class="form-label">Дата встречи</label>
+                        <input name="meet_date" type="date" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label for="time" class="form-label">Время встречи</label>
-                        <input name="time" type="time" class="form-control" required>
+                        <label for="meet_time" class="form-label">Время встречи</label>
+                        <input name="meet_time" type="time" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label for="place" class="form-label">Комментарий партнеру (необязательно для заполнения)</label>
-                        <textarea name="place" type="text" class="form-control"></textarea>
+                        <label for="body" class="form-label">Комментарий партнеру (необязательно для заполнения)</label>
+                        <textarea name="body" type="text" class="form-control"></textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отправить</button>
+                <button type="submit" form="inviteForm" class="btn btn-secondary">Отправить</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
             </div>
         </div>
     </div>
 </div>
+
+<script src="scripts/cards.js"></script>

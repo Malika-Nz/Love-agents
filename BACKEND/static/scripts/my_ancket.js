@@ -52,3 +52,39 @@ updatePassword.addEventListener('submit', async (e) => {
         alert('Ошибка запроса');
     })
 });
+
+
+function ArchivateAccount() {
+    let confirm = window.confirm('Вы уверены, что хотите удалить аккаунт?');
+    if (!confirm) {
+        return;
+    }
+
+    let reason = window.prompt('Причина удаления аккаунта:');
+    if (!reason) {
+        alert('Причина удаления аккаунта не может быть пустой');
+        return;
+    }
+
+    fetch('http://localhost:3333/archivate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({reason}),
+    }).then(res => {
+        if (res.ok) {
+            alert('Аккаунт успешно удалён!');
+            window.location.href = 'http://localhost:3333/logout';
+            return;
+        }
+        return res.json();
+    }).then(data => {
+        if (data) {
+            alert(data.error);
+        }
+    }).catch(err => {
+        console.error(err);
+        alert('Ошибка запроса');
+    })
+}
