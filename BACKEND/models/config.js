@@ -1,7 +1,11 @@
-module.exports = {
+const pgp = require('pg-promise')();
+
+const data = {
     host: 'localhost',
     port: 5432,
     database: 'love_agents',
-    user: 'postgres',
-    password: 'malika@579321'
+    user: 'root',
+    password: 'root'
 };
+
+module.exports = pgp(data);
