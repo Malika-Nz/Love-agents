@@ -113,6 +113,20 @@ app.get('/my_ancket', async (req, res) => {
         l.meet_date = l.meet_date.toLocaleDateString();
         l.meet_time = l.meet_time.substr(0, 5);
 
+        switch (l.status) {
+            case 'A':
+                l.accepted = true;
+                break;
+            case 'D':
+                l.declined = true;
+                break;
+            case 'G':
+                l.got = true;
+                break;
+            case 'R':
+                l.rejected = true;
+                break;
+        }
     });
     // получаем все письма, которые пользователь получил
     const letters_received = letters.filter(l => l.recipient === user.id && ['A', 'G', 'R'].includes(l.status));
