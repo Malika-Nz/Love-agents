@@ -89,7 +89,35 @@ function ArchivateAccount() {
     })
 }
 
+const payForm = document.getElementById('payForm');
+
+payForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    fetch('http://localhost:3333/pay', {
+        method: 'POST',
+        body: new FormData(payForm)
+    }).then(res => {
+        if (res.ok) {
+            alert('Платёж успешно проведён!');
+            const nextButton = document.getElementById('nextButton');
+            nextButton.disabled = false;
+            payForm.submit.disabled = true;
+            return;
+        }
+        return res.json();
+    }).then(data => {
+        if (data) {
+            alert(data.error);
+        }
+    }).catch(err => {
+        console.error(err);
+        alert('Ошибка запроса');
+    })
+});
+
 document.addEventListener('click', (e) => {
+    // кнопка "Открыть"
     if (e.target.id && e.target.id.includes('open')) {
         let id = e.target.id.split('_')[0];
         let readed = true;
@@ -115,9 +143,39 @@ document.addEventListener('click', (e) => {
         });
     }
 
+    // кнопка "Отказать"
     if (e.target.id && e.target.id.includes('refuce')) {
         let id = e.target.id.split('_')[0];
+        let readed = false;
         let status = 'R';
+
+        fetch(`http://localhost:3333/update_letter`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({id, status}),
+        }).then(res => {
+            if (res.ok) {
+                window.location.reload();
+                return;
+            }
+            return res.json();
+        }).then(data => {
+            if (data) {
+                alert(data.error);
+            }
+        }).catch(err => {
+            console.error(err);
+            alert('Сервер упал');
+        });
+    }
+
+    // кнопка "Согласиться" (после оплаты)
+    if (e.target.id && e.target.id === 'nextButton') {
+        let status = 'G';
+        let readed = false;
+        let id = e.target.dataset.id;
 
         fetch(`http://localhost:3333/update_letter`, {
             method: 'POST',

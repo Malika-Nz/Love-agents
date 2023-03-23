@@ -34,6 +34,7 @@ hbs.registerPartials(path.join(__dirname, "/views/partials"));
 const User = require('./models/user');
 const Letter = require('./models/letter');
 const Archive = require('./models/archive');
+const Payment = require('./models/payment');
 
 app.get('/', (req, res) => {
     let email = req.cookies['hola'];
@@ -351,6 +352,46 @@ app.post('/update_letter', upload.none(), async function(req, res) {
     res.status(200).end();
 });
 
+app.post('/pay', upload.none(), async function(req, res) {
+    const obj = JSON.parse(JSON.stringify(req.body));
+    const email = req.cookies['hola'];
+
+    if (!email) {
+        return res.status(400).json({error: "Пользователь не найден"})
+    }
+
+    const user = await User.getOne(email);
+    if (!user) {
+        return res.status(400).json({error: "Пользователь не найден"})
+    }
+
+    if (!obj.card_number || !obj.card_date || !obj.card_cvv) {
+        return res.status(400).json({error: "Ошибка ввода данных"})
+    }
+
+    if (obj.card_number.length !== 16) {
+        return res.status(400).json({error: "Неверный номер карты"})
+    }
+
+    if (obj.card_date.length !== 5) {
+        return res.status(400).json({error: "Неверная дата карты"})
+    }
+
+    if (obj.card_cvv.length !== 3) {
+        return res.status(400).json({error: "Неверный cvv"})
+    }
+
+    obj.user_id = user.id;
+    obj.amount = 15;
+
+    const pay = await Payment.create(obj);
+
+    if (!pay) {
+        return res.status(400).json({error: "Ошибка оплаты"})
+    }
+
+    res.status(200).end();
+});
 
 app.get('/me', async function (req, res) {
     let email = req.cookies['hola'];

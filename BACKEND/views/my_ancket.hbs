@@ -90,21 +90,24 @@
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                         </div>
                         <div class="modal-body">
+                          <form id="payForm">
                           <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">Номер карты</label>
-                            <input name="num_kart" type="text" class="form-control" maxlength="16" required>
+                            <input name="card_number" type="text" class="form-control" maxlength="16" required>
                           </div>
                           <div class="mb-3">
                           <label for="disabledTextInput" class="form-label">Дата на карте</label>
-                            <input name="dat_kart" type="month" class="form-control" required>
+                            <input name="card_date" type="month" class="form-control" required>
                           </div>
                           <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">CVV код</label>
-                            <input name="cvv_kart" type="number" class="form-control" required>
+                            <input name="card_cvv" type="number" class="form-control" required>
                           </div>
+                          <button type="submit" class="btn btn-primary">Оплатить</button>
+                          </form>
                         </div>
                         <div class="modal-footer">
-                          <button class="btn btn-primary" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">Далее</button>
+                          <button id="nextButton" class="btn btn-primary" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal" data-id="{{this.id}}" disabled>Далее</button>
                         </div>
                       </div>
                     </div>
@@ -119,7 +122,7 @@
                         <div class="modal-body">
                           <p>Желаю вам прекрасного свидания, спасибо за использование услуг нашего сайта!</p>
                           <p>Для связи</p>
-                          <span>Ник в телеграме партнера: @something</span>
+                          <span>Ник в телеграме партнера: {{this.sender.telegram}}</span>
                         </div>
                         <div class="modal-footer">
                           <button class="btn btn-primary"  data-bs-toggle="modal">Закрыть</button>
