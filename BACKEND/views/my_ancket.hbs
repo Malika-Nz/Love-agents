@@ -35,10 +35,17 @@
             
             <div class="col-8">
                 {{#each letters_received}}
-                <div class="alert alert-primary d-flex align-items-center justify-content-between" role="alert">
-                    <span>Вам пришло новое письмо!</span>
-                    <button class="mt-2 d-flex justify-content-end btn btn-success" data-bs-toggle="modal" href="#InboxModal{{this.id}}" role="button">Открыть</button>
-                </div>
+                {{#if this.readed}}
+                  <div class="alert alert-secondary d-flex align-items-center justify-content-between" role="alert">
+                    <span>Просмотрено</span>
+                    <button class="mt-2 d-flex justify-content-end btn btn-secondary" data-bs-toggle="modal" href="#InboxModal{{this.id}}" role="button">Открыть</button>
+                  </div>
+                {{else}}
+                  <div class="alert alert-primary d-flex align-items-center justify-content-between" role="alert">
+                      <span>Вам пришло новое письмо!</span>
+                      <button id="{{this.id}}_open" class="mt-2 d-flex justify-content-end btn btn-success" data-bs-toggle="modal" href="#InboxModal{{this.id}}" role="button">Открыть</button>
+                  </div>
+                {{/if}}
 
                 <!-- Письмо - модальное окно -->
                 <div class="modal fade" id="InboxModal{{this.id}}" aria-hidden="true" aria-labelledby="InboxModal{{this.id}}Label" tabindex="-1">
@@ -67,8 +74,10 @@
                               </div>
                         </div>
                         <div class="modal-footer">
-                          <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Согласиться</button>
-                          <button class="btn btn-primary" data-bs-toggle="modal">Отказаться</button>
+                          {{#unless this.blocked}}
+                            <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Согласиться</button>
+                            <button id="{{this.id}}_refuce" class="btn btn-primary" data-bs-toggle="modal">Отказаться</button>
+                          {{/unless}}
                         </div>
                       </div>
                     </div>
@@ -119,10 +128,6 @@
                     </div>
                   </div>
                 {{/each}}
-                <div class="alert alert-secondary d-flex align-items-center justify-content-between" role="alert">
-                    <span>Просмотрено</span>
-                    <button class="mt-2 d-flex justify-content-end btn btn-secondary">Открыть</button>
-                </div>
             </div>
 
         </div>

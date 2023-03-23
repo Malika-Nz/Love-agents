@@ -88,3 +88,56 @@ function ArchivateAccount() {
         alert('Ошибка запроса');
     })
 }
+
+document.addEventListener('click', (e) => {
+    if (e.target.id && e.target.id.includes('open')) {
+        let id = e.target.id.split('_')[0];
+        let readed = true;
+
+        fetch(`http://localhost:3333/update_letter`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({id, readed}),
+        }).then(res => {
+            if (res.ok) {
+                return;
+            }
+            return res.json();
+        }).then(data => {
+            if (data) {
+                alert(data.error);
+            }
+        }).catch(err => {
+            console.error(err);
+            alert('Сервер упал');
+        });
+    }
+
+    if (e.target.id && e.target.id.includes('refuce')) {
+        let id = e.target.id.split('_')[0];
+        let status = 'R';
+
+        fetch(`http://localhost:3333/update_letter`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({id, status}),
+        }).then(res => {
+            if (res.ok) {
+                window.location.reload();
+                return;
+            }
+            return res.json();
+        }).then(data => {
+            if (data) {
+                alert(data.error);
+            }
+        }).catch(err => {
+            console.error(err);
+            alert('Сервер упал');
+        });
+    }
+});

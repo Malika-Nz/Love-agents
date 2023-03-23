@@ -111,6 +111,7 @@ app.get('/my_ancket', async (req, res) => {
         l.recipient.birthday = today.getFullYear() - l.recipient.birthday.getFullYear();
         l.meet_date = l.meet_date.toLocaleDateString();
         l.meet_time = l.meet_time.substr(0, 5);
+
     });
     // получаем все письма, которые пользователь получил
     const letters_received = letters.filter(l => l.recipient === user.id && ['A', 'G', 'R'].includes(l.status));
@@ -119,6 +120,11 @@ app.get('/my_ancket', async (req, res) => {
         l.sender.birthday = today.getFullYear() - l.sender.birthday.getFullYear();
         l.meet_date = l.meet_date.toLocaleDateString();
         l.meet_time = l.meet_time.substr(0, 5);
+        
+        if (l.status === 'G' || l.status === 'R') {
+            l.readed = true;
+            l.blocked = true;
+        }
     });
 
     return res.render('my_ancket.hbs', {user, letters_sent, letters_received});
@@ -321,6 +327,30 @@ app.post('/invite', upload.none(), async function(req, res) {
 
     res.status(200).end();
 });
+
+
+app.post('/update_letter', upload.none(), async function(req, res) {
+    const obj = JSON.parse(JSON.stringify(req.body));
+    const email = req.cookies['hola'];
+
+    if (!email) {
+        return res.status(400).json({error: "Пользователь не найден"})
+    }
+
+    const user = await User.getOne(email);
+    if (!user) {
+        return res.status(400).json({error: "Пользователь не найден"})
+    }
+
+    if (!obj.id) {
+        return res.status(400).json({error: "Письмо не найдено"})
+    }
+
+    await Letter.update(obj.id, obj);
+
+    res.status(200).end();
+});
+
 
 app.get('/me', async function (req, res) {
     let email = req.cookies['hola'];

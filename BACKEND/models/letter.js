@@ -21,6 +21,22 @@ class Letter {
             [sender, recipient, body, place, address, meet_date, meet_time, status]
         );
     }
+
+    static async update(id, data) {
+        const { readed, status } = data;
+
+        if (readed) {
+            return db.one(
+                'UPDATE letter SET readed = $1, updated_at = NOW() WHERE id = $2 RETURNING *',
+                [readed, id]
+            );
+        } else if (status) {
+            return db.one(
+                'UPDATE letter SET status = $1, updated_at = NOW() WHERE id = $2 RETURNING *',
+                [status, id]
+            );
+        }
+    }
 }
 
 module.exports = Letter;
