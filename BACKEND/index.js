@@ -109,12 +109,16 @@ app.get('/my_ancket', async (req, res) => {
     letters_sent.forEach(l => {
         l.recipient = users.find(u => u.id === l.recipient);
         l.recipient.birthday = today.getFullYear() - l.recipient.birthday.getFullYear();
+        l.meet_date = l.meet_date.toLocaleDateString();
+        l.meet_time = l.meet_time.substr(0, 5);
     });
     // получаем все письма, которые пользователь получил
     const letters_received = letters.filter(l => l.recipient === user.id && ['A', 'G', 'R'].includes(l.status));
     letters_received.forEach(l => {
         l.sender = users.find(u => u.id === l.sender);
         l.sender.birthday = today.getFullYear() - l.sender.birthday.getFullYear();
+        l.meet_date = l.meet_date.toLocaleDateString();
+        l.meet_time = l.meet_time.substr(0, 5);
     });
 
     return res.render('my_ancket.hbs', {user, letters_sent, letters_received});
