@@ -91,43 +91,46 @@ function ArchivateAccount() {
 
 const payForm = document.getElementById('payForm');
 
-payForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+if (payForm) {
+    payForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    fetch('http://localhost:3333/pay', {
-        method: 'POST',
-        body: new FormData(payForm)
-    }).then(res => {
-        if (res.ok) {
-            alert('Платёж успешно проведён!');
-            const nextButton = document.getElementById('nextButton');
-            nextButton.disabled = false;
-            payForm.submit.disabled = true;
-            return;
-        }
-        return res.json();
-    }).then(data => {
-        if (data) {
-            alert(data.error);
-        }
-    }).catch(err => {
-        console.error(err);
-        alert('Ошибка запроса');
-    })
-});
+        fetch('http://localhost:3333/pay', {
+            method: 'POST',
+            body: new FormData(payForm)
+        }).then(res => {
+            if (res.ok) {
+                alert('Платёж успешно проведён!');
+                const nextButton = document.getElementById('nextButton');
+                nextButton.disabled = false;
+                payForm.submit.disabled = true;
+                return;
+            }
+            return res.json();
+        }).then(data => {
+            if (data) {
+                alert(data.error);
+            }
+        }).catch(err => {
+            console.error(err);
+            alert('Ошибка запроса');
+        })
+    });
+}
 
 document.addEventListener('click', (e) => {
     // кнопка "Открыть"
     if (e.target.id && e.target.id.includes('open')) {
         let id = e.target.id.split('_')[0];
         let readed = true;
+        let type = e.target.dataset.type;
 
         fetch(`http://localhost:3333/update_letter`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
-            body: JSON.stringify({id, readed}),
+            body: JSON.stringify({id, readed, type}),
         }).then(res => {
             if (res.ok) {
                 return;
@@ -182,10 +185,9 @@ document.addEventListener('click', (e) => {
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
-            body: JSON.stringify({id, status}),
+            body: JSON.stringify({id, status, readed}),
         }).then(res => {
             if (res.ok) {
-                window.location.reload();
                 return;
             }
             return res.json();
@@ -197,5 +199,10 @@ document.addEventListener('click', (e) => {
             console.error(err);
             alert('Сервер упал');
         });
+    }
+
+    // кнопка "Завершить"
+    if (e.target.id && e.target.id.includes('endingButton')) {
+        window.location.reload();
     }
 });

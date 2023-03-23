@@ -45,6 +45,14 @@ app.get('/', (req, res) => {
     }
 });
 
+app.get('/admin', async (req, res) => {
+    const users = await User.getAll();
+    const letters = await Letter.getAll();
+    const payments = await Payment.getAll();
+
+    res.render('admin.hbs', {title: 'Админка', users, letters, payments});
+});
+
 app.get('/reg', (req, res) => {
     let email = req.cookies['hola'];
 
@@ -106,17 +114,15 @@ app.get('/my_ancket', async (req, res) => {
     // получаем все письма пользователя
     const letters = await Letter.getAllByUser(user.id);
     // получаем все письма, которые пользователь отправил
-    const letters_sent = letters.filter(l => l.sender === user.id && ['A', 'D', 'G', 'R'].includes(l.status));
+    const letters_sent = letters.filter(l => l.sender === user.id && ['D', 'G', 'R'].includes(l.status));
     letters_sent.forEach(l => {
         l.recipient = users.find(u => u.id === l.recipient);
         l.recipient.birthday = today.getFullYear() - l.recipient.birthday.getFullYear();
+        l.sender = user;
         l.meet_date = l.meet_date.toLocaleDateString();
         l.meet_time = l.meet_time.substr(0, 5);
 
         switch (l.status) {
-            case 'A':
-                l.accepted = true;
-                break;
             case 'D':
                 l.declined = true;
                 break;
@@ -358,7 +364,16 @@ app.post('/update_letter', upload.none(), async function(req, res) {
     }
 
     if (!obj.id) {
+        return res.status(400).json({error: "Передано пустое значение id"})
+    }
+
+    const letter = await Letter.getOneById(obj.id);
+    if (!letter) {
         return res.status(400).json({error: "Письмо не найдено"})
+    }
+
+    if (obj.type === 'letter' && ['G', 'R'].includes(letter.status)) {
+        obj.readed = undefined;
     }
 
     await Letter.update(obj.id, obj);

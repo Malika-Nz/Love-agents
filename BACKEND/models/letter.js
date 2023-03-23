@@ -13,6 +13,10 @@ class Letter {
         return db.oneOrNone('SELECT * FROM letter WHERE sender = $1 OR recipient = $1', id);
     }
 
+    static async getOneById(id) {
+        return db.oneOrNone('SELECT * FROM letter WHERE id = $1', id);
+    }
+
     static async create(data) {
         const { sender, recipient, body, place, address, meet_date, meet_time, status } = data;
 
