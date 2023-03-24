@@ -3,6 +3,7 @@
         <div class="col-5">
             <p><b>Письма в обработке:</b></p>
             {{#each letters}}
+                {{#if this.inProcess}}
                 <div class="alert alert-primary d-flex align-items-center justify-content-between" role="alert">
                     <span>Новое письмо</span>
                     <a class="mt-2 d-flex justify-content-end btn btn-success" data-bs-toggle="modal" href="#InProcessModal{{this.id}}" role="button">Открыть</a>
@@ -40,6 +41,7 @@
                       </div>
                     </div>
                   </div>
+                {{/if}}
             {{/each}}
         </div>
         <div class="col-7">
@@ -75,10 +77,14 @@
         <div>
             <hr>
             <p><b>Отчеты по свиданиям:</b></p>
-            <div class="alert alert-dark d-flex align-items-center justify-content-between" role="alert">
-                <span>Отчет 23.03.23</span>
-                <a class="mt-2 d-flex justify-content-end btn btn-success" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Открыть</a>
-            </div>
+            {{#each letters}}
+            {{#if this.got}}
+                <div class="alert alert-dark d-flex align-items-center justify-content-between">
+                    <span>{{this.sender.fio}} - {{this.recipient.fio}} ({{this.meet_date}})</span>
+                    <a class="mt-2 d-flex justify-content-end btn btn-success" data-id="{{this.id}}" data-type="report">Скачать отчёт</a>
+                </div>
+            {{/if}}
+            {{/each}}
         </div>
     </div>
 </div>

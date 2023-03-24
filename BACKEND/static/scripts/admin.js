@@ -62,4 +62,13 @@ document.addEventListener('click', (e) => {
             alert('Ошибка запроса');
         })
     }
+
+    if (e.target.dataset.type === 'report') {
+        const id = e.target.dataset.id;
+
+        let url = new URL('http://localhost:3333/report_letter');
+        url.searchParams.append('id', id);
+
+        window.open(url);
+    }
 });

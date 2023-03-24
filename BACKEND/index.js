@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const path = require('path');
 const handlebars = require('express-handlebars');
 const hbs = require("hbs");
+const fs = require('fs');
+const createReport = require('docx-templates').default;
 
 const app = express();
 
@@ -65,37 +67,23 @@ app.get('/admin', async (req, res) => {
 
     let letters = await Letter.getAll();
 
-    letters = letters.filter(l => l.status === 'P');
+    letters = letters.filter(l => l.status === 'P' || l.status === 'G');
 
     letters.forEach(l => {
         l.sender = users.find(u => u.id === l.sender);
+        l.recipient = users.find(u => u.id === l.recipient);
 
-        if (Number.isInteger(l.sender.birthday)) {
-            l.sender.birthday = l.sender.birthday + ' лет';
-        } else {
-            l.sender.birthday = l.sender.birthday + ' года';
-        }
-
-        l.meet_date = l.meet_date.toLocaleString();
+        l.meet_date = l.meet_date.toLocaleDateString();
         l.meet_time = l.meet_time.toLocaleString();
 
-        // switch (l.status) {
-        //     case 'P':
-        //         l.inProcess = true;
-        //         break;
-        //     case 'A':
-        //         l.accepted = true;
-        //         break;
-        //     case 'R':
-        //         l.rejected = true;
-        //         break;
-        //     case 'D':
-        //         l.declined = true;
-        //         break;
-        //     case 'G':
-        //         l.got = true;
-        //         break;
-        // }
+        switch (l.status) {
+            case 'P':
+                l.inProcess = true;
+                break;
+            case 'G':
+                l.got = true;
+                break;
+        }
     });
 
     const payments = await Payment.getAll();
@@ -199,7 +187,7 @@ app.get('/my_ancket', async (req, res) => {
     const letters_received = letters.filter(l => l.recipient === user.id && ['A', 'G', 'R'].includes(l.status));
     letters_received.forEach(l => {
         l.sender = users.find(u => u.id === l.sender);
-        if (Number.isInteger(l.birthday)) {
+        if (!Number.isInteger(l.sender.birthday)) {
             l.sender.birthday = today.getFullYear() - l.sender.birthday.getFullYear();
         }
         l.meet_date = l.meet_date.toLocaleDateString();
@@ -211,7 +199,87 @@ app.get('/my_ancket', async (req, res) => {
         }
     });
 
-    return res.render('my_ancket.hbs', {user, letters_sent, letters_received});
+    return res.render('my_ancket.hbs', {user, letters_sent, letters_received, title: 'Моя анкета'});
+});
+
+app.get('/security', async (req, res) => {
+    let email = req.cookies['hola'];
+
+    if (email === 'admin@admin') {
+        return res.redirect(301, '/admin');
+    }
+
+    if (!email) {
+        return res.redirect(301, '/reg');
+    }
+
+    const user = await User.getOne(email);
+
+    return res.render('security.hbs', {title: 'Безопасность', user});
+});
+
+app.get('/protect', async (req, res) => {
+    let email = req.cookies['hola'];
+
+    if (email === 'admin@admin') {
+        return res.redirect(301, '/admin');
+    }
+
+    if (!email) {
+        return res.redirect(301, '/reg');
+    }
+
+    const user = await User.getOne(email);
+
+    return res.render('protect.hbs', {title: 'Защита', user});
+});
+
+app.get('/contacts', async (req, res) => {
+    let email = req.cookies['hola'];
+
+    if (email === 'admin@admin') {
+        return res.redirect(301, '/admin');
+    }
+
+    if (!email) {
+        return res.redirect(301, '/reg');
+    }
+
+    const user = await User.getOne(email);
+
+    return res.render('contacts.hbs', {title: 'Контакты', user});
+});
+
+app.get('/helpme', async (req, res) => {
+    let email = req.cookies['hola'];
+
+    if (email === 'admin@admin') {
+        return res.redirect(301, '/admin');
+    }
+
+    if (!email) {
+        return res.redirect(301, '/reg');
+    }
+
+    const user = await User.getOne(email);
+
+    return res.render('helpme.hbs', {title: 'Помощь', user});
+});
+
+app.get('/politicy', async (req, res) => {
+    let email = req.cookies['hola'];
+
+    if (email === 'admin@admin') {
+        return res.redirect(301, '/admin');
+    }
+
+    if (!email) {
+        return res.redirect(301, '/reg');
+    }
+
+    const user = await User.getOne(email);
+
+    return res.render('politicy.hbs', {title: 'Политика конфиденциальности', user});
 });
 
 app.post('/signup', upload.single('avatar'), async function(req, res) {
@@ -500,6 +568,51 @@ app.post('/update_letter', upload.none(), async function(req, res) {
     await Letter.update(obj.id, obj);
 
     res.status(200).end();
+});
+
+app.get('/report_letter', upload.none(), async function(req, res) {
+    const obj = req.query;
+    
+    if (!obj.id) {
+        return res.status(400).json({error: "Передано пустое значение id"})
+    }
+
+    const letter = await Letter.getOneById(obj.id);
+    if (!letter) {
+        return res.status(400).json({error: "Письмо не найдено"})
+    }
+    letter.meet_date = letter.meet_date.toLocaleDateString('ru-RU');
+    letter.meet_time = letter.meet_time.split(':').slice(0, 2).join(':');
+    letter.sender = await User.getOneById(letter.sender);
+    letter.recipient = await User.getOneById(letter.recipient);
+
+    // заполнение шаблона docx
+    const template = fs.readFileSync('static/docx/report.docx', 'binary');
+
+    const buffer = await createReport({
+        template,
+        data: {
+            date: letter.meet_date,
+            time: letter.meet_time,
+            sender: letter.sender,
+            recipient: letter.recipient,
+            place: letter.place,
+            address: letter.address,
+            body: letter.body,
+        }
+    });
+
+    // сохранение файла
+    const filename = `report_${letter.id}.docx`;
+    fs.writeFileSync(`static/docx/${filename}`, buffer);
+
+    // отправка файла
+    res.download(`static/docx/${filename}`, filename, function (err) {
+        console.log('Ошибка', err);
+    });
+
+    // удаление файла
+    
 });
 
 app.post('/pay', upload.none(), async function(req, res) {
