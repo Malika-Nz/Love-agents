@@ -17,6 +17,10 @@ class Archive {
             [id, reason]
         );
     }
+
+    static async delete(id) {
+        return db.none('DELETE FROM archive WHERE id = $1', id);
+    }
 }
 
 module.exports = Archive;

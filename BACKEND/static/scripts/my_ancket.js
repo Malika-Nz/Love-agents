@@ -157,7 +157,7 @@ document.addEventListener('click', (e) => {
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
-            body: JSON.stringify({id, status}),
+            body: JSON.stringify({id, status, readed}),
         }).then(res => {
             if (res.ok) {
                 window.location.reload();
@@ -202,7 +202,7 @@ document.addEventListener('click', (e) => {
     }
 
     // кнопка "Завершить"
-    if (e.target.id && e.target.id.includes('endingButton')) {
+    if (e.target.id && e.target.id.includes('close')) {
         window.location.reload();
     }
 });

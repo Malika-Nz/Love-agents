@@ -35,6 +35,9 @@
             
             <div class="col-8">
                 <h3>Входящие письма</h3>
+                {{#unless letters_received}}
+                  Тут будут ваши письма
+                {{/unless}}
                 {{#each letters_received}}
                 {{#if this.readed}}
                   <div class="alert alert-secondary d-flex align-items-center justify-content-between" role="alert">
@@ -126,7 +129,7 @@
                           <span>Ник в телеграме партнера: {{this.sender.telegram}}</span>
                         </div>
                         <div class="modal-footer">
-                          <button id="endingButton" class="btn btn-primary" data-bs-toggle="modal">Закрыть</button>
+                          <button id="{{this.id}}_close" class="btn btn-primary" data-bs-toggle="modal">Закрыть</button>
                         </div>
                       </div>
                     </div>
@@ -134,6 +137,9 @@
                 {{/each}}
 
                 <h3>Мои письма</h3>
+                {{#unless letters_sent}}
+                  Тут будут ваши уведомления
+                {{/unless}}
                 {{#each letters_sent}}
                   {{#if this.readed}}
                     <div class="alert alert-secondary d-flex align-items-center justify-content-between" role="alert">
@@ -175,13 +181,13 @@
                         </div>
                         <div class="modal-footer d-flex justify-content-around">
                           {{#if this.declined}}
-                            Письмо отклонено администратором
+                            <div class="text-danger">Письмо отклонено администратором</div>
                           {{/if}}
                           {{#if this.got}}
-                            Получатель принял приглашение
+                            <div class="text-success">Получатель принял приглашение</div>
                           {{/if}}
                           {{#if this.rejected}}
-                            Получатель отклонил приглашение
+                            <div class="text-danger">Получатель отклонил приглашение</div>
                           {{/if}}
                           <button id="{{this.id}}_close" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
                         </div>

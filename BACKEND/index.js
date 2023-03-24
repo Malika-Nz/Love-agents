@@ -46,16 +46,69 @@ app.get('/', (req, res) => {
 });
 
 app.get('/admin', async (req, res) => {
+    let email = req.cookies['hola'];
+
+    if (email !== 'admin@admin') {
+        return res.redirect(301, '/reg');
+    }
+
     const users = await User.getAll();
-    const letters = await Letter.getAll();
+    const archived = await Archive.getAll();
+    let today = new Date();
+
+    users.forEach(u => {
+        if (archived.find(a => a.id === u.id)) {
+            u.archived = true;
+        }
+        u.birthday = today.getFullYear() - u.birthday.getFullYear();
+    });
+
+    let letters = await Letter.getAll();
+
+    letters = letters.filter(l => l.status === 'P');
+
+    letters.forEach(l => {
+        l.sender = users.find(u => u.id === l.sender);
+
+        if (Number.isInteger(l.sender.birthday)) {
+            l.sender.birthday = l.sender.birthday + ' лет';
+        } else {
+            l.sender.birthday = l.sender.birthday + ' года';
+        }
+
+        l.meet_date = l.meet_date.toLocaleString();
+        l.meet_time = l.meet_time.toLocaleString();
+
+        // switch (l.status) {
+        //     case 'P':
+        //         l.inProcess = true;
+        //         break;
+        //     case 'A':
+        //         l.accepted = true;
+        //         break;
+        //     case 'R':
+        //         l.rejected = true;
+        //         break;
+        //     case 'D':
+        //         l.declined = true;
+        //         break;
+        //     case 'G':
+        //         l.got = true;
+        //         break;
+        // }
+    });
+
     const payments = await Payment.getAll();
 
-    res.render('admin.hbs', {title: 'Админка', users, letters, payments});
+    res.render('admin.hbs', {title: 'Админка', users, letters, payments, user: true, admin: true});
 });
 
 app.get('/reg', (req, res) => {
     let email = req.cookies['hola'];
 
+    if (email === 'admin@admin') {
+        return res.redirect(301, '/admin');
+    }
     if (email) {
         return res.redirect(301, '/cards');
     }
@@ -66,6 +119,9 @@ app.get('/reg', (req, res) => {
 app.get('/cards', async (req, res) => {
     let email = req.cookies['hola'];
 
+    if (email === 'admin@admin') {
+        return res.redirect(301, '/admin');
+    }
     if (!email) {
         return res.redirect(301, '/reg');
     }
@@ -97,6 +153,9 @@ app.get('/cards', async (req, res) => {
 app.get('/my_ancket', async (req, res) => {
     let email = req.cookies['hola'];
     
+    if (email === 'admin@admin') {
+        return res.redirect(301, '/admin');
+    }
     if (!email) {
         return res.redirect(301, '/reg');
     }
@@ -117,7 +176,9 @@ app.get('/my_ancket', async (req, res) => {
     const letters_sent = letters.filter(l => l.sender === user.id && ['D', 'G', 'R'].includes(l.status));
     letters_sent.forEach(l => {
         l.recipient = users.find(u => u.id === l.recipient);
-        l.recipient.birthday = today.getFullYear() - l.recipient.birthday.getFullYear();
+        if (Number.isInteger(l.recipient.birthday)) {
+            l.recipient.birthday = today.getFullYear() - l.recipient.birthday.getFullYear();
+        }
         l.sender = user;
         l.meet_date = l.meet_date.toLocaleDateString();
         l.meet_time = l.meet_time.substr(0, 5);
@@ -138,7 +199,9 @@ app.get('/my_ancket', async (req, res) => {
     const letters_received = letters.filter(l => l.recipient === user.id && ['A', 'G', 'R'].includes(l.status));
     letters_received.forEach(l => {
         l.sender = users.find(u => u.id === l.sender);
-        l.sender.birthday = today.getFullYear() - l.sender.birthday.getFullYear();
+        if (Number.isInteger(l.birthday)) {
+            l.sender.birthday = today.getFullYear() - l.sender.birthday.getFullYear();
+        }
         l.meet_date = l.meet_date.toLocaleDateString();
         l.meet_time = l.meet_time.substr(0, 5);
         
@@ -195,6 +258,10 @@ app.post('/login', upload.none(), async function(req, res) {
     const obj = JSON.parse(JSON.stringify(req.body));
     const { email, password } = obj;
 
+    if (email === 'admin@admin' && password === 'admin@admin') {
+        res.cookie('hola', email, {expires: new Date(Date.now() + 1000 * 60 * 60 * 24)});
+        return res.status(200).end();
+    }
     if (!email) {
         return res.status(400).json({error: "Пустая почта"})
     }
@@ -230,6 +297,15 @@ app.get('/logout', async function(req, res) {
 
 app.post('/logout', async function(req, res) {
     const email = req.cookies['hola'];
+
+    if (!email) {
+        return res.status(400).json({error: "Пользователь не найден"})
+    }
+
+    if (email === 'admin@admin') {
+        res.clearCookie('hola');
+        return res.status(200).end();
+    }
 
     const user = await User.getOne(email);
     
@@ -308,6 +384,20 @@ app.post('/archivate', upload.none(), async function(req, res) {
     let email = req.cookies['hola'];
     const obj = JSON.parse(JSON.stringify(req.body));
 
+    if (email === 'admin@admin') {
+        obj.reason = 'Заблокирован администратором';
+
+        const user = await User.getOneById(obj.id);
+
+        if (!user) {
+            return res.status(400).json({error: "Пользователь не найден"})
+        }
+
+        await Archive.create(obj);
+
+        return res.status(200).end();
+    }
+
     const user = await User.getOne(email);
 
     if (!email || !user) {
@@ -322,6 +412,25 @@ app.post('/archivate', upload.none(), async function(req, res) {
 
     res.clearCookie('hola');
     res.status(200).end();
+});
+
+app.post('/unarchivate', upload.none(), async function(req, res) {
+    let email = req.cookies['hola'];
+    const obj = JSON.parse(JSON.stringify(req.body));
+
+    if (email === 'admin@admin') {
+        const user = await User.getOneById(obj.id);
+
+        if (!user) {
+            return res.status(400).json({error: "Пользователь не найден"})
+        }
+
+        await Archive.delete(obj.id);
+
+        return res.status(200).end();
+    }
+
+    return res.status(400).json({error: "Только администратор может разблокировать пользователя"});
 });
 
 
@@ -340,8 +449,8 @@ app.post('/invite', upload.none(), async function(req, res) {
 
     obj.sender = user.id;
     obj.place = obj.place.toString();
-    // obj.status = 'P';
-    obj.status = 'A';
+    obj.status = 'P';
+    // obj.status = 'A';
     obj.recipient = +obj.recipient;
 
     Letter.create(obj);
@@ -353,6 +462,18 @@ app.post('/invite', upload.none(), async function(req, res) {
 app.post('/update_letter', upload.none(), async function(req, res) {
     const obj = JSON.parse(JSON.stringify(req.body));
     const email = req.cookies['hola'];
+
+    if (email === 'admin@admin') {
+        const letter = await Letter.getOneById(obj.id);
+
+        if (!letter) {
+            return res.status(400).json({error: "Письмо не найдено"})
+        }
+
+        await Letter.update(obj.id, obj);
+
+        return res.status(200).end();
+    }
 
     if (!email) {
         return res.status(400).json({error: "Пользователь не найден"})

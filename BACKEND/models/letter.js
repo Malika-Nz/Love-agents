@@ -28,14 +28,18 @@ class Letter {
 
     static async update(id, data) {
         const { readed, status } = data;
+        console.log(readed, status);
 
-        if (readed) {
-            return db.one(
+        if (readed === true || readed === false) {
+            console.log('readed', readed);
+            db.one(
                 'UPDATE letter SET readed = $1, updated_at = NOW() WHERE id = $2 RETURNING *',
                 [readed, id]
             );
-        } else if (status) {
-            return db.one(
+        }
+        if (status) {
+            console.log('status', status);
+            db.one(
                 'UPDATE letter SET status = $1, updated_at = NOW() WHERE id = $2 RETURNING *',
                 [status, id]
             );

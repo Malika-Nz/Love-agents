@@ -1,16 +1,21 @@
 <header>
     <nav class="head navbar bg-body-tertiary mb-4">
         <div class="container-fluid">
-        <a class="twirl navbar-brand  d-flex align-items-center" href="/">
-            <img src="images/logotype.svg" alt="Logo" width="50" height="45" class="d-inline-block align-text-top">
-            LA
-        </a>
+            <a class="twirl navbar-brand  d-flex align-items-center" href="/">
+                <img src="images/logotype.svg" alt="Logo" width="50" height="45" class="d-inline-block align-text-top">
+                LA
+            </a>
+            {{#if admin}}
+                <b>ПАНЕЛЬ АДМИНИСТРАТОРА</b>
+            {{/if}}
             <div class="d-flex justify-content-end">
                 {{#unless user}}
                 <a href="#" class="knopka btn text-light" data-bs-toggle="modal" data-bs-target="#LoginModal">Войти</a>
                 {{/unless}}
                 {{#if user}}
-                <a href="/my_ancket" class="knopka btn text-light">Моя анкета</a>
+                {{#unless admin}}
+                    <a href="/my_ancket" class="knopka btn text-light">Моя анкета</a>
+                {{/unless}}
                 <a href="#" id="logoutButton" class="knopka btn text-light">Выход</a>
                 {{/if}}
             </div>
