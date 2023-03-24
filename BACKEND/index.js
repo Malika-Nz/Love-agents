@@ -297,7 +297,6 @@ app.post('/signup', upload.single('avatar'), async function(req, res) {
     
     let today = new Date();
     let birthday = new Date(obj.birthday);
-    console.log(today.getFullYear() - birthday.getFullYear(), birthday);
     if (today.getFullYear() - birthday.getFullYear() < 18) {
         return res.status(400).json({error: "Возраст должен быть более 18 лет"})
     }
@@ -608,11 +607,17 @@ app.get('/report_letter', upload.none(), async function(req, res) {
 
     // отправка файла
     res.download(`static/docx/${filename}`, filename, function (err) {
-        console.log('Ошибка', err);
+        if (err) {
+            console.log(err);
+        } else {
+            // удаление файла
+            fs.unlink(`static/docx/${filename}`, function (err) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+        }
     });
-
-    // удаление файла
-    
 });
 
 app.post('/pay', upload.none(), async function(req, res) {
