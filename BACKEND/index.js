@@ -38,6 +38,7 @@ const Letter = require('./models/letter');
 const Archive = require('./models/archive');
 const Payment = require('./models/payment');
 
+// переадресация на страницы
 app.get('/', (req, res) => {
     let email = req.cookies['hola'];
     if (email) {
@@ -47,6 +48,7 @@ app.get('/', (req, res) => {
     }
 });
 
+// админ-панель
 app.get('/admin', async (req, res) => {
     let email = req.cookies['hola'];
 
@@ -91,6 +93,7 @@ app.get('/admin', async (req, res) => {
     res.render('admin.hbs', {title: 'Админка', users, letters, payments, user: true, admin: true});
 });
 
+// страница регистрации
 app.get('/reg', (req, res) => {
     let email = req.cookies['hola'];
 
@@ -104,6 +107,7 @@ app.get('/reg', (req, res) => {
     return res.render('registration.hbs', {title: 'Регистрация'});
 });
 
+// страница с карточками пользователей
 app.get('/cards', async (req, res) => {
     let email = req.cookies['hola'];
 
@@ -135,9 +139,10 @@ app.get('/cards', async (req, res) => {
         return u;
     });
 
-    return res.render('cards.hbs', {user: user, users: usersArray});
+    return res.render('cards.hbs', {user: user, users: usersArray, title: 'Карточки'});
 });
 
+// страница с анкетой пользователя
 app.get('/my_ancket', async (req, res) => {
     let email = req.cookies['hola'];
     
@@ -202,6 +207,7 @@ app.get('/my_ancket', async (req, res) => {
     return res.render('my_ancket.hbs', {user, letters_sent, letters_received, title: 'Моя анкета'});
 });
 
+// страница с рекомендациями по безопасности
 app.get('/security', async (req, res) => {
     let email = req.cookies['hola'];
 
@@ -218,6 +224,7 @@ app.get('/security', async (req, res) => {
     return res.render('security.hbs', {title: 'Безопасность', user});
 });
 
+// страница о защите персональных данных
 app.get('/protect', async (req, res) => {
     let email = req.cookies['hola'];
 
@@ -234,6 +241,7 @@ app.get('/protect', async (req, res) => {
     return res.render('protect.hbs', {title: 'Защита', user});
 });
 
+// страница с контактами
 app.get('/contacts', async (req, res) => {
     let email = req.cookies['hola'];
 
@@ -250,6 +258,7 @@ app.get('/contacts', async (req, res) => {
     return res.render('contacts.hbs', {title: 'Контакты', user});
 });
 
+// страница с помощью
 app.get('/helpme', async (req, res) => {
     let email = req.cookies['hola'];
 
@@ -266,6 +275,7 @@ app.get('/helpme', async (req, res) => {
     return res.render('helpme.hbs', {title: 'Помощь', user});
 });
 
+// страница с пользовательским соглашением
 app.get('/politicy', async (req, res) => {
     let email = req.cookies['hola'];
 
@@ -282,6 +292,7 @@ app.get('/politicy', async (req, res) => {
     return res.render('politicy.hbs', {title: 'Политика конфиденциальности', user});
 });
 
+// обработка формы регистрации
 app.post('/signup', upload.single('avatar'), async function(req, res) {
     const obj = JSON.parse(JSON.stringify(req.body));
     
@@ -321,6 +332,7 @@ app.post('/signup', upload.single('avatar'), async function(req, res) {
     res.status(201).end();
 });
 
+// обработка формы авторизации
 app.post('/login', upload.none(), async function(req, res) {
     const obj = JSON.parse(JSON.stringify(req.body));
     const { email, password } = obj;
@@ -352,6 +364,7 @@ app.post('/login', upload.none(), async function(req, res) {
     res.status(200).end();
 });
 
+// выход из аккаунта
 app.get('/logout', async function(req, res) {
     const email = req.cookies['hola'];
 
@@ -362,6 +375,7 @@ app.get('/logout', async function(req, res) {
     return res.redirect(301, '/reg');
 });
 
+// выход из аккаунта
 app.post('/logout', async function(req, res) {
     const email = req.cookies['hola'];
 
@@ -384,6 +398,7 @@ app.post('/logout', async function(req, res) {
     return res.status(200).end();
 });
 
+// обновление данных пользователя
 app.post('/update', upload.single('avatar'), async function(req, res) {
     const obj = JSON.parse(JSON.stringify(req.body));
     const email = req.cookies['hola'];
@@ -420,6 +435,7 @@ app.post('/update', upload.single('avatar'), async function(req, res) {
     res.status(200).end();
 });
 
+// обновление пароля
 app.post('/update_password', upload.none(), async function(req, res) {
     const obj = JSON.parse(JSON.stringify(req.body));
     const email = req.cookies['hola'];
@@ -447,6 +463,7 @@ app.post('/update_password', upload.none(), async function(req, res) {
     res.status(200).end();
 });
 
+// архивация пользователя
 app.post('/archivate', upload.none(), async function(req, res) {
     let email = req.cookies['hola'];
     const obj = JSON.parse(JSON.stringify(req.body));
@@ -481,6 +498,7 @@ app.post('/archivate', upload.none(), async function(req, res) {
     res.status(200).end();
 });
 
+// восстановление пользователя
 app.post('/unarchivate', upload.none(), async function(req, res) {
     let email = req.cookies['hola'];
     const obj = JSON.parse(JSON.stringify(req.body));
@@ -500,7 +518,7 @@ app.post('/unarchivate', upload.none(), async function(req, res) {
     return res.status(400).json({error: "Только администратор может разблокировать пользователя"});
 });
 
-
+// отправка приглашения на встречу
 app.post('/invite', upload.none(), async function(req, res) {
     const obj = JSON.parse(JSON.stringify(req.body));
     const email = req.cookies['hola'];
@@ -525,7 +543,7 @@ app.post('/invite', upload.none(), async function(req, res) {
     res.status(200).end();
 });
 
-
+// обновление статуса приглашения
 app.post('/update_letter', upload.none(), async function(req, res) {
     const obj = JSON.parse(JSON.stringify(req.body));
     const email = req.cookies['hola'];
@@ -569,6 +587,7 @@ app.post('/update_letter', upload.none(), async function(req, res) {
     res.status(200).end();
 });
 
+// получение отчёта по свиданию
 app.get('/report_letter', upload.none(), async function(req, res) {
     const obj = req.query;
     
@@ -620,6 +639,7 @@ app.get('/report_letter', upload.none(), async function(req, res) {
     });
 });
 
+// произвести оплату
 app.post('/pay', upload.none(), async function(req, res) {
     const obj = JSON.parse(JSON.stringify(req.body));
     const email = req.cookies['hola'];
@@ -661,6 +681,7 @@ app.post('/pay', upload.none(), async function(req, res) {
     res.status(200).end();
 });
 
+// данные о пользователе
 app.get('/me', async function (req, res) {
     let email = req.cookies['hola'];
 
@@ -673,6 +694,7 @@ app.get('/me', async function (req, res) {
     res.json(user);
 });
 
+// запуск сервера
 app.listen(3333, () => {
     console.log('Application listening on port 3333');
 });
