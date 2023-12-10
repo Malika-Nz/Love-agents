@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ."
+    "start": "node .",
+    "dev": "nodemon ."
   },
   "author": "",
   "license": "ISC",
@@ -19,5 +20,8 @@
     "mysql": "^2.18.1",
     "pg-promise": "^11.4.3",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
   }
 }

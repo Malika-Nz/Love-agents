@@ -37,7 +37,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label">ФИО</label>
-                        <input name="fio" type="text" class="form-control" required value="Г Г Г">
+                        <input name="fio" type="text" class="form-control" required value="Иванов Иван Иванович">
                     </div>
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label">Дата рождения</label>
@@ -49,24 +49,25 @@
                     </div>
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label">Почта</label>
-                        <input name="email" type="email" class="form-control" required value="1@1">
+                        <input name="email" type="email" class="form-control" required value="ivan@mail.ru">
                     </div>
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label">Пароль</label>
-                        <input name="password" type="password" class="form-control" required value="122345">
+                        <input name="password" type="password" class="form-control" required value="12345">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Напишите о себе</label>
-                        <textarea name="about" class="form-control" rows="3" required>12334</textarea>
+                        <textarea name="about" class="form-control" rows="3" required>Обо мне ничего не скажешь</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label">Ваш ник в телеграме</label>
-                        <input name="telegram" type="text" class="form-control" required value="@case">
+                        <input name="telegram" type="text" class="form-control" required value="@ivan">
                     </div>
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Выберете фотографию</label>
                         <input name="avatar" class="form-control" type="file" id="formFile" required>
-                        </div>
+                    </div>
+                    <p class="text-center text-danger" id="error"></p>
                     <button type="submit" class="btn btn-primary">Отправить</button>
                 </form>
             </div>

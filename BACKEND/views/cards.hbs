@@ -1,5 +1,42 @@
 <div class="container mb-5">
-    <div id="carouselExample" class="carousel slide">
+    <div class="accordion accordion-flush mb-3" id="accordionFlushExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    Фильтр
+                </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <form id="filterForm">
+                    <div class="input-group mt-2 mb-2">
+                        <span class="input-group-text" id="basic-addon1">ФИО</span>
+                        <input name="fio" type="text" value="{{fio}}" class="form-control" placeholder="ФИО" aria-label="fio" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-2">
+                        <input name="start_age" type="number" value="{{start_age}}" aria-label="from" placeholder="18" min="18" max="80" class="form-control">
+                        <span class="input-group-text">Диапазон возрастов</span>
+                        <input name="end_age" type="number" value="{{end_age}}" aria-label="to" placeholder="80" min="18" max="80" class="form-control">
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text" id="basic-addon1">Город</span>
+                        <select name="city" value="{{city}}" class="form-select" placeholder="Город" aria-label="city" aria-describedby="basic-addon1">
+                            <option value="">Все города</option>
+                            {{#each cities}}
+                            <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="flex justify-content-center">
+                        <button type="submit" class="btn btn-success">Применить</button>
+                        <button type="reset" class="btn btn-danger">Сбросить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{#if users}}
+    <div id="carousel" class="carousel slide">
         <div class="carousel-inner">
             {{#each users}}
             <div id="{{this.id}}" class="carousel-item {{#if this.active}}active{{/if}} bg-secondary">
@@ -17,16 +54,22 @@
             </div>
             </div>
             {{/each}}
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Предыдущий</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Следующий</span>
+            </button>
+            </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Предыдущий</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Следующий</span>
-        </button>
-        </div>
+    </div>
+    {{else}}
+    <div class="alert alert-warning" role="alert">
+        Нет пользователей, удовлетворяющих условиям фильтра
+    </div>
+    {{/if}}
 </div>
 
 
