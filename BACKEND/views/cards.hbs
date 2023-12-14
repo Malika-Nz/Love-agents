@@ -19,7 +19,7 @@
                     </div>
                     <div class="input-group mb-2">
                         <span class="input-group-text" id="basic-addon1">Город</span>
-                        <select name="city" value="{{city}}" class="form-select" placeholder="Город" aria-label="city" aria-describedby="basic-addon1">
+                        <select name="city" class="form-select" placeholder="Город" aria-label="city" aria-describedby="basic-addon1">
                             <option value="">Все города</option>
                             {{#each cities}}
                             <option value="{{this}}">{{this}}</option>
@@ -34,7 +34,6 @@
             </div>
         </div>
     </div>
-
     {{#if users}}
     <div id="carousel" class="carousel slide">
         <div class="carousel-inner">

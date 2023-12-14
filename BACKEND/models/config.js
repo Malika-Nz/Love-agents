@@ -4,8 +4,8 @@ const data = {
     host: 'localhost',
     port: 5432,
     database: 'love_agents',
-    user: 'root',
-    password: 'root'
+    user: 'postgres',
+    password: '1234'
 };
 
 module.exports = pgp(data);

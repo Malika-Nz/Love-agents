@@ -1,0 +1,12 @@
+INSERT INTO public.users (fio, email, password, about, avatar, telegram, city, gender, gender_cand, birthday)
+VALUES
+  ('Иванов Иван Петрович', 'ivanov@example.com', 'hashed_password', 'Опытный программист с большим стажем работы в области разработки.', 'data:image/jpeg;base64,...', '@ivanov', 'Москва', 'male', 'female', '1985-05-20'),
+  ('Петрова Елена Александровна', 'petrova@example.com', 'hashed_password', 'Студентка, увлекающаяся искусством и программированием.', 'data:image/jpeg;base64,...', '@elenapetrova', 'Санкт-Петербург', 'female', 'male', '1990-09-15'),
+  ('Смирнов Дмитрий Игоревич', 'smirnov@example.com', 'hashed_password', 'Молодой предприниматель, интересующийся новейшими технологиями.', 'data:image/jpeg;base64,...', '@dmitriysmirnov', 'Екатеринбург', 'male', 'female', '1988-11-03'),
+  ('Козлова Анастасия Сергеевна', 'kozlova@example.com', 'hashed_password', 'Дизайнер с творческим мышлением и любовью к красивым вещам.', 'data:image/jpeg;base64,...', '@anastasiakozlova', 'Нижний Новгород', 'female', 'male', '1983-07-12'),
+  ('Морозов Артем Валерьевич', 'morozov@example.com', 'hashed_password', 'Любитель приключений и активного образа жизни.', 'data:image/jpeg;base64,...', '@artemmorozov', 'Казань', 'male', 'female', '1995-02-28'),
+  ('Кузнецова Ирина Олеговна', 'kuznetsova@example.com', 'hashed_password', 'Преподаватель с большим опытом работы в области образования.', 'data:image/jpeg;base64,...', '@irinakuznetsova', 'Самара', 'female', 'male', '1982-04-17'),
+  ('Волков Максим Владимирович', 'volkov@example.com', 'hashed_password', 'Финансовый аналитик с уклоном в анализ данных и исследования рынка.', 'data:image/jpeg;base64,...', '@maximvolkov', 'Ростов-на-Дону', 'male', 'female', '1987-09-05'),
+  ('Лебедева Анна Игоревна', 'lebedeva@example.com', 'hashed_password', 'Инженер-строитель, увлекающаяся архитектурой и дизайном.', 'data:image/jpeg;base64,...', '@annalebedeva', 'Уфа', 'female', 'male', '1993-12-08'),
+  ('Никитин Сергей Андреевич', 'nikitin@example.com', 'hashed_password', 'Блогер и путешественник, делящийся своими приключениями в социальных сетях.', 'data:image/jpeg;base64,...', '@sergeynikitin', 'Челябинск', 'male', 'female', '1986-06-23'),
+  ('Григорьева Екатерина Дмитриевна', 'grigoryeva@example.com', 'hashed_password', 'Медицинская сестра с преданностью и заботой о пациентах.', 'data:image/jpeg;base64,...', '@ekaterinagrigoryeva', 'Омск', 'female', 'male', '1998-01-14');

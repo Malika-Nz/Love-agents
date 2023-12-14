@@ -140,9 +140,6 @@ app.get("/cards", async (req, res) => {
   const archived = await Archive.getAll();
   usersArray = usersArray.filter((u) => !archived.find((a) => a.id === u.id));
 
-  // добавляем активность первой карточке (для отображения)
-  usersArray[0].active = true;
-
   // из даты рождения получаем возраст
   let today = new Date();
   usersArray = usersArray.map((u) => {
@@ -156,13 +153,18 @@ app.get("/cards", async (req, res) => {
     usersArray = usersArray.filter((u) => u.fio.includes(query.fio));
   }
   if (query.start_age) {
-    usersArray = usersArray.filter((u) => u.birthday >= query.start_age);
+    usersArray = usersArray.filter((u) => u.birthday >= +query.start_age);
   }
   if (query.end_age) {
-    usersArray = usersArray.filter((u) => u.birthday <= query.end_age);
+    usersArray = usersArray.filter((u) => u.birthday <= +query.end_age);
   }
   if (query.city) {
     usersArray = usersArray.filter((u) => u.city === query.city);
+  }
+
+  // добавляем активность первой карточке (для отображения)
+  if (usersArray.length > 0) {
+    usersArray[0].active = true;
   }
 
   return res.render("cards.hbs", {

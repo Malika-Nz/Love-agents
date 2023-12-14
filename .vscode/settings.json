@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "love agents",
+            "database": "love_agents",
+            "username": "postgres",
+            "password": "1234"
+        }
+    ]
+}
