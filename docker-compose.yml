@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: love_agents
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./love_agents_dump.sql:/docker-entrypoint-initdb.d/love_agents_dump.sql
+    networks:
+      - love_agents_network
+    
+  backend:
+    build:
+      context: ./BACKEND
+    command: ["npm", "start"]
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3333"
+    networks:
+      - love_agents_network
+
+networks:
+  love_agents_network:
+    driver: bridge
