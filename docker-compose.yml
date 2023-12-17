@@ -13,6 +13,7 @@ services:
       - ./love_agents_dump.sql:/docker-entrypoint-initdb.d/love_agents_dump.sql
     networks:
       - love_agents_network
+    restart: always
     
   backend:
     build:
@@ -24,6 +25,7 @@ services:
       - "3000:3333"
     networks:
       - love_agents_network
+    restart: always
 
 networks:
   love_agents_network:
