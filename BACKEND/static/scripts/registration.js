@@ -37,7 +37,7 @@ regForm.addEventListener("submit", async (e) => {
 
   error.innerText = "";
 
-  fetch("http://localhost:3333/signup", {
+  fetch("/signup", {
     method: "POST",
     body: new FormData(regForm),
   })

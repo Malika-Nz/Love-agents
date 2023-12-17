@@ -9,7 +9,7 @@ inviteForm.addEventListener("submit", async (e) => {
   const data = new FormData(inviteForm);
   data.append("recipient", recipientId);
 
-  fetch("http://localhost:3333/invite", {
+  fetch("/invite", {
     method: "POST",
     body: data,
   })
