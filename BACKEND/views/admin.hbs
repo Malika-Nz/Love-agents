@@ -1,92 +1,187 @@
 <div class="p-4">
-    <div class="row">
-        <div class="col-5">
-            <p><b>Письма в обработке:</b></p>
-            {{#each letters}}
-                {{#if this.inProcess}}
-                <div class="alert alert-primary d-flex align-items-center justify-content-between" role="alert">
-                    <span>Новое письмо</span>
-                    <a class="mt-2 d-flex justify-content-end btn btn-success" data-bs-toggle="modal" href="#InProcessModal{{this.id}}" role="button">Открыть</a>
-                </div>
+  <div class="row">
+    <div class="col-5">
+      <p><b>Письма в обработке:</b></p>
+      {{#each letters}}
+        {{#if this.inProcess}}
+          <div
+            class="alert alert-primary d-flex align-items-center justify-content-between"
+            role="alert"
+          >
+            <span>Новое письмо</span>
+            <a
+              class="mt-2 d-flex justify-content-end btn btn-success"
+              data-bs-toggle="modal"
+              href="#InProcessModal{{this.id}}"
+              role="button"
+            >Открыть</a>
+          </div>
 
-                <div class="modal fade" id="InProcessModal{{this.id}}" aria-hidden="true" aria-labelledby="InProcessModal{{this.id}}Label" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="InProcessModal{{this.id}}Label">Приглашение</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                        </div>
-                        <div class="modal-body p-0">
-                            <div class="container">
-                                <div class="top-right p-1">
-                                    <img src="{{this.sender.avatar}}" width="150px" height="150px" alt="">
-                                    <p class="text-pisma p-2">{{this.sender.fio}}
-                                        <br>Возраст: {{this.sender.birthday}}
-                                        <br>Город: {{this.sender.city}}
-                                        <br>Информация о себе: {{this.sender.about}}
-                                    </p>
-                                    <p class="text-pisma p-2">Наименование места: {{this.place}}
-                                        <br> Точный адрес встречи: {{this.address}}
-                                        <br>Дата встречи: {{this.meet_date}}
-                                        <br>Время: {{this.meet_time}}
-                                        <br>Комментарий: {{this.body}}
-                                    </p>
-                                </div>
-                              </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-primary" data-bs-target="#InProcessModal{{this.id}}" data-id="{{this.id}}" data-type="letterButton" data-bs-toggle="modal">Принять</button>
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-id="{{this.id}}" data-type="letterButton">Отклонить</button>
-                        </div>
-                      </div>
+          <div
+            class="modal fade"
+            id="InProcessModal{{this.id}}"
+            aria-hidden="true"
+            aria-labelledby="InProcessModal{{this.id}}Label"
+            tabindex="-1"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1
+                    class="modal-title fs-5"
+                    id="InProcessModal{{this.id}}Label"
+                  >Приглашение</h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Закрыть"
+                  ></button>
+                </div>
+                <div class="modal-body p-0">
+                  <div class="container">
+                    <div class="top-right p-1">
+                      <img
+                        src="{{this.sender.avatar}}"
+                        width="150px"
+                        height="150px"
+                        alt=""
+                      />
+                      <p class="text-pisma p-2">{{this.sender.fio}}
+                        <br />Возраст:
+                        {{this.sender.birthday}}
+                        <br />Город:
+                        {{this.sender.city}}
+                        <br />Информация о себе:
+                        {{this.sender.about}}
+                      </p>
+                      <p class="text-pisma p-2">Наименование места:
+                        {{this.place}}
+                        <br />
+                        Точный адрес встречи:
+                        {{this.address}}
+                        <br />Дата встречи:
+                        {{this.meet_date}}
+                        <br />Время:
+                        {{this.meet_time}}
+                        <br />Комментарий:
+                        {{this.body}}
+                      </p>
                     </div>
                   </div>
-                {{/if}}
-            {{/each}}
-        </div>
-        <div class="col-7">
-            <p style="text-align: right; margin-right: 90px;"><b>ПОЛЬЗОВАТЕЛИ:</b></p>
-            <div class="accordion accordion-flush" id="users">
-                {{#each users}}
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="flush-heading{{this.id}}">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{this.id}}" aria-expanded="false" aria-controls="flush-collapseOne">
-                                {{#if this.archived}}
-                                    <del>{{this.fio}}</del>
-                                {{else}}
-                                    {{this.fio}}
-                                {{/if}}
-                            </button>
-                        </h2>
-                        <div id="flush-collapse{{this.id}}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{this.id}}" data-bs-parent="#users">
-                            <div class="accordion-body">
-                                email: {{this.email}} <br> telegram: {{this.telegram}} <br> city: {{this.city}} <br>
-                                gender: {{this.gender}} <br> gender candidate: {{this.gender_cand}} <br> birthday: {{this.birthday}} <br>
-                                create date: {{this.created_at}} <br>
-                                {{#if this.archived}}
-                                    <button class="btn btn-success" data-id="{{this.id}}" data-type="userButton">Восстановить</button>
-                                {{else}}
-                                    <button class="btn btn-warning" data-id="{{this.id}}" data-type="userButton">Архивировать</button>
-                                {{/if}}
-                            </div>
-                        </div>
-                    </div>
-                {{/each}}
-            </div>
-        </div>
-        <div>
-            <hr>
-            <p><b>Отчеты по свиданиям:</b></p>
-            {{#each letters}}
-            {{#if this.got}}
-                <div class="alert alert-dark d-flex align-items-center justify-content-between">
-                    <span>{{this.sender.fio}} - {{this.recipient.fio}} ({{this.meet_date}})</span>
-                    <a class="mt-2 d-flex justify-content-end btn btn-success" data-id="{{this.id}}" data-type="report">Скачать отчёт</a>
                 </div>
-            {{/if}}
-            {{/each}}
-        </div>
+                <div class="modal-footer">
+                  <button
+                    class="btn btn-primary"
+                    data-bs-target="#InProcessModal{{this.id}}"
+                    data-id="{{this.id}}"
+                    data-type="letterButton"
+                    data-bs-toggle="modal"
+                  >Принять</button>
+                  <button
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-id="{{this.id}}"
+                    data-type="letterButton"
+                  >Отклонить</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/if}}
+      {{/each}}
     </div>
+    <div class="col-7">
+      <p style="text-align: right; margin-right: 90px;"><b>ПОЛЬЗОВАТЕЛИ:</b></p>
+      <div class="accordion accordion-flush" id="users">
+        {{#each users}}
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading{{this.id}}">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#flush-collapse{{this.id}}"
+                aria-expanded="false"
+                aria-controls="flush-collapseOne"
+              >
+                {{#if this.archived}}
+                  <del>{{this.fio}}</del>
+                {{else}}
+                  {{this.fio}}
+                {{/if}}
+              </button>
+            </h2>
+            <div
+              id="flush-collapse{{this.id}}"
+              class="accordion-collapse collapse"
+              aria-labelledby="flush-heading{{this.id}}"
+              data-bs-parent="#users"
+            >
+              <div class="accordion-body">
+                email:
+                {{this.email}}
+                <br />
+                telegram:
+                {{this.telegram}}
+                <br />
+                city:
+                {{this.city}}
+                <br />
+                gender:
+                {{this.gender}}
+                <br />
+                gender candidate:
+                {{this.gender_cand}}
+                <br />
+                birthday:
+                {{this.birthday}}
+                <br />
+                create date:
+                {{this.created_at}}
+                <br />
+                {{#if this.archived}}
+                  <button
+                    class="btn btn-success"
+                    data-id="{{this.id}}"
+                    data-type="userButton"
+                  >Восстановить</button>
+                {{else}}
+                  <button
+                    class="btn btn-warning"
+                    data-id="{{this.id}}"
+                    data-type="userButton"
+                  >Архивировать</button>
+                {{/if}}
+
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+    <div>
+      <hr />
+      <p><b>Отчеты по свиданиям:</b></p>
+      {{#each letters}}
+        {{#if this.got}}
+          <div
+            class="alert alert-dark d-flex align-items-center justify-content-between"
+          >
+            <span>{{this.sender.fio}}
+              -
+              {{this.recipient.fio}}
+              ({{this.meet_date}})</span>
+            <a
+              class="mt-2 d-flex justify-content-end btn btn-success"
+              data-id="{{this.id}}"
+              data-type="report"
+            >Скачать отчёт</a>
+          </div>
+        {{/if}}
+      {{/each}}
+    </div>
+  </div>
 </div>
 
 <script src="scripts/admin.js"></script>

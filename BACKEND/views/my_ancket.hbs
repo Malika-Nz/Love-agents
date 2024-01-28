@@ -1,262 +1,625 @@
 <div class="container mb-5">
-        <h3 class="d-flex justify-content-center mt-5 mb-3">МОЯ АНКЕТА</h3>
-        <div class="row bg-white">
-            <div class="col-4 border border-warning p-4">
-                <img class="rounded img-fluid border border-dark" src="{{user.avatar}}" alt="">
-                <form id="updateProfile">
-                  <div class="mb-3">
-                      <label for="formFile" class="form-label">Сменить фото</label>
-                      <input name="avatar" class="form-control" type="file" id="formFile" >
-                  </div>
-                  <div class="mb-3">
-                      <label for="disabledTextInput" class="form-label">Сменить ФИО</label>
-                      <input name="fio" type="text" class="form-control" value="{{user.fio}}" required>
-                  </div>
-                  <div class="mb-3">
-                      <label for="disabledTextInput" class="form-label">Сменить город</label>
-                      <input name="city" type="text" class="form-control" value="{{user.city}}" required>
-                  </div>
-                  <div class="mb-3">
-                      <label for="exampleFormControlTextarea1" class="form-label">Сменить информацию о себе</label>
-                      <textarea name="about" class="form-control" id="exampleFormControlTextarea1" rows="3" required>{{user.about}}</textarea>
-                  </div>
-                  <div class="mb-3">
-                      <label for="disabledTextInput" class="form-label">Сменить ник в телеграме</label>
-                      <input name="telegram" type="text" class="form-control" value="{{user.telegram}}" required>
-                  </div>
-                </form>
-                <div class="d-flex">
-                    <button class="me-1 btn btn-primary cvet" form="updateProfile">Сохранить</button>
-                    <button class="btn btn-primary cvet" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Просмотреть анкету</button>
-                </div> 
-                <button class="btn btn-primary mt-2 cvet" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Сменить пароль</button>
-                <button class="btn btn-primary mt-2 cvet" onclick="ArchivateAccount();">Удалить аккаунт</button>
-            </div>
-            
-            <div class="col-8">
-                <h3>Входящие письма</h3>
-                {{#unless letters_received}}
-                  Тут будут ваши письма
-                {{/unless}}
-                {{#each letters_received}}
-                {{#if this.readed}}
-                  <div class="alert alert-secondary d-flex align-items-center justify-content-between" role="alert">
-                    <span>Просмотрено</span>
-                    <button class="mt-2 d-flex justify-content-end btn btn-secondary" data-bs-toggle="modal" href="#InboxModal{{this.id}}" role="button">Открыть</button>
-                  </div>
-                {{else}}
-                  <div class="alert alert-primary d-flex align-items-center justify-content-between" role="alert">
-                      <span>Вам пришло новое письмо!</span>
-                      <button id="{{this.id}}_open" class="mt-2 d-flex justify-content-end btn btn-success" data-bs-toggle="modal" href="#InboxModal{{this.id}}" data-type="letter" role="button">Открыть</button>
-                  </div>
-                {{/if}}
-
-                <!-- Письмо - модальное окно -->
-                <div class="modal fade" id="InboxModal{{this.id}}" aria-hidden="true" aria-labelledby="InboxModal{{this.id}}Label" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="InboxModal{{this.id}}Label">Приглашение</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                        </div>
-                        <div class="modal-body p-0">
-                            <div class="container">
-                                <div class="top-right p-1">
-                                    <img src="{{this.sender.avatar}}" width="150px" height="150px" alt="">
-                                    <p class="text-pisma p-2">{{this.sender.fio}}
-                                        <br>Возраст: {{this.sender.birthday}}
-                                        <br>Город: {{this.sender.city}}
-                                        <br>Информация о себе: {{this.sender.about}}
-                                    </p>
-                                    <p class="text-pisma p-2">Наименование места: {{this.place}}
-                                        <br> Точный адрес встречи: {{this.address}}
-                                        <br>Дата встречи: {{this.meet_date}}
-                                        <br>Время: {{this.meet_time}}
-                                        <br>Комментарий: {{this.body}}
-                                    </p>
-                                </div>
-                              </div>
-                        </div>
-                        <div class="modal-footer">
-                          {{#unless this.blocked}}
-                            <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Согласиться</button>
-                            <button id="{{this.id}}_refuce" class="btn btn-primary" data-bs-toggle="modal">Отказаться</button>
-                          {{/unless}}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Пожалуйста, произведите оплату (сумма 15 рублей)</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                        </div>
-                        <div class="modal-body">
-                          <form id="payForm">
-                          <div class="mb-3">
-                            <label for="disabledTextInput" class="form-label">Номер карты</label>
-                            <input name="card_number" type="text" class="form-control" maxlength="16" required>
-                          </div>
-                          <div class="mb-3">
-                          <label for="disabledTextInput" class="form-label">Дата на карте</label>
-                            <input name="card_date" placeholder="mm/yy" class="form-control" required>
-                          </div>
-                          <div class="mb-3">
-                            <label for="disabledTextInput" class="form-label">CVV код</label>
-                            <input name="card_cvv" type="number" class="form-control" required>
-                          </div>
-                          <button type="submit" class="btn btn-primary">Оплатить</button>
-                          </form>
-                        </div>
-                        <div class="modal-footer">
-                          <button id="nextButton" class="btn btn-primary" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal" data-id="{{this.id}}" disabled>Далее</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel3" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="exampleModalToggleLabel3">Успешно</h1>
-                          <button type="button" class="btn-close" aria-label="Закрыть"></button>
-                        </div>
-                        <div class="modal-body">
-                          <p>Желаю вам прекрасного свидания, спасибо за использование услуг нашего сайта!</p>
-                          <p>Для связи</p>
-                          <span>Ник в телеграме партнера: {{this.sender.telegram}}</span>
-                        </div>
-                        <div class="modal-footer">
-                          <button id="{{this.id}}_close" class="btn btn-primary" data-bs-toggle="modal">Закрыть</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                {{/each}}
-
-                <h3>Мои письма</h3>
-                {{#unless letters_sent}}
-                  Тут будут ваши уведомления
-                {{/unless}}
-                {{#each letters_sent}}
-                  {{#if this.readed}}
-                    <div class="alert alert-secondary d-flex align-items-center justify-content-between" role="alert">
-                      <span>Просмотрено</span>
-                      <button class="mt-2 d-flex justify-content-end btn btn-secondary" data-bs-toggle="modal" href="#AlertModal{{this.id}}" role="button">Открыть</button>
-                    </div>
-                  {{else}}
-                    <div class="alert alert-primary d-flex align-items-center justify-content-between" role="alert">
-                        <span>Вам пришло новое уведомление!</span>
-                        <button id="{{this.id}}_open" class="mt-2 d-flex justify-content-end btn btn-success" data-bs-toggle="modal" href="#AlertModal{{this.id}}" data-type="alert" role="button">Открыть</button>
-                    </div>
-                  {{/if}}
-
-                  <!-- Письмо - модальное окно -->
-                  <div class="modal fade" id="AlertModal{{this.id}}" aria-hidden="true" aria-labelledby="AlertModal{{this.id}}Label" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="AlertModal{{this.id}}Label">Приглашение</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                        </div>
-                        <div class="modal-body p-0">
-                            <div class="container">
-                                <div class="top-right p-1">
-                                    <img src="{{this.sender.avatar}}" width="150px" height="150px" alt="">
-                                    <p class="text-pisma p-2">{{this.sender.fio}}
-                                        <br>Возраст: {{this.sender.birthday}}
-                                        <br>Город: {{this.sender.city}}
-                                        <br>Информация о себе: {{this.sender.about}}
-                                    </p>
-                                    <p class="text-pisma p-2">Наименование места: {{this.place}}
-                                        <br> Точный адрес встречи: {{this.address}}
-                                        <br>Дата встречи: {{this.meet_date}}
-                                        <br>Время: {{this.meet_time}}
-                                        <br>Комментарий: {{this.body}}
-                                    </p>
-                                </div>
-                              </div>
-                        </div>
-                        <div class="modal-footer d-flex justify-content-around">
-                          {{#if this.declined}}
-                            <div class="text-danger">Письмо отклонено администратором</div>
-                          {{/if}}
-                          {{#if this.got}}
-                            <div class="text-success">Получатель принял приглашение</div>
-                          {{/if}}
-                          {{#if this.rejected}}
-                            <div class="text-danger">Получатель отклонил приглашение</div>
-                          {{/if}}
-                          <button id="{{this.id}}_close" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                {{/each}}
-            </div>
-
+  <h3 class="d-flex justify-content-center mt-5 mb-3">МОЯ АНКЕТА</h3>
+  <div class="row bg-white">
+    <div class="col-4 border border-warning p-4">
+      <img
+        class="rounded img-fluid border border-dark"
+        src="{{user.avatar}}"
+        alt=""
+      />
+      <form id="updateProfile">
+        <div class="mb-3">
+          <label for="formFile" class="form-label">Сменить фото</label>
+          <input name="avatar" class="form-control" type="file" id="formFile" />
         </div>
+        <div class="mb-3">
+          <label for="disabledTextInput" class="form-label">Сменить ФИО</label>
+          <input
+            name="fio"
+            type="text"
+            class="form-control"
+            value="{{user.fio}}"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="disabledTextInput" class="form-label">Сменить город</label>
+          <input
+            name="city"
+            type="text"
+            class="form-control"
+            value="{{user.city}}"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlTextarea1" class="form-label">Сменить
+            информацию о себе</label>
+          <textarea
+            name="about"
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            required
+          >{{user.about}}</textarea>
+        </div>
+        <div class="mb-3">
+          <label for="disabledTextInput" class="form-label">Сменить ник в
+            телеграме</label>
+          <input
+            name="telegram"
+            type="text"
+            class="form-control"
+            value="{{user.telegram}}"
+            required
+          />
+        </div>
+      </form>
+      <div class="d-flex">
+        <button
+          class="me-1 btn btn-primary cvet"
+          form="updateProfile"
+        >Сохранить</button>
+        <button
+          class="btn btn-primary cvet"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+        >Просмотреть анкету</button>
+      </div>
+      <button
+        class="btn btn-primary mt-2 cvet"
+        data-bs-toggle="modal"
+        data-bs-target="#changePasswordModal"
+      >Сменить пароль</button>
+      <button
+        class="btn btn-primary mt-2 cvet"
+        onclick="ArchivateAccount();"
+      >Удалить аккаунт</button>
     </div>
 
-    <!-- сменить пароль - модальное окно -->
-    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="changePasswordModalLabel">Сменить пароль</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row bg-white">
-                    <form id="updatePassword">
-                      <div class="mb-3">
-                          <label for="disabledTextInput" class="form-label">Старый пароль</label>
-                          <input name="password" type="password" class="form-control" required>
-                      </div>
-                      <div class="mb-3">
-                          <label for="disabledTextInput" class="form-label">Новый пароль</label>
-                          <input name="new_password" type="password" class="form-control" required>
-                      </div>
-                      <div class="mb-3">
-                          <label for="disabledTextInput" class="form-label">Введите повторно новый пароль</label>
-                          <input name="confirm_password" type="password" class="form-control" required>
-                      </div>
-                    </form>
+    <div class="col-8">
+      {{#if letters_to_review}}
+        <h3 title="Оставьте отзыв о прошедшем свидании">Добавить отзыв</h3>
+      {{/if}}
+      {{#each letters_to_review}}
+        <div
+          class="alert alert-warning d-flex align-items-center justify-content-between"
+          role="alert"
+        >
+          <span>Свидание с партнёром
+            {{this.partner.name}}
+            ({{this.meet_date}})</span>
+          <button
+            class="mt-2 d-flex justify-content-end btn btn-outline-warning"
+            data-bs-toggle="modal"
+            href="#ReviewModal{{this.id}}"
+            role="button"
+          >Оставить в отзыв</button>
+        </div>
+
+        <!-- Отзыв - модальное окно -->
+        <div
+          class="modal fade"
+          id="ReviewModal{{this.id}}"
+          aria-hidden="true"
+          aria-labelledby="ReviewModal{{this.id}}Label"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1
+                  class="modal-title fs-5"
+                  id="ReviewModal{{this.id}}Label"
+                >Отзыв о свидании</h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Закрыть"
+                ></button>
+              </div>
+              <div class="modal-body p-0">
+                <div class="container d-flex flex-column">
+                  <legend class="reg text-center p-2 mb-4">Отзыв о партнёре
+                    {{this.partner.name}}</legend>
+                  <img
+                    class="mb-3 align-self-center"
+                    src="{{this.partner.avatar}}"
+                    width="150px"
+                    height="150px"
+                    alt=""
+                  />
+                  <form id="reviewForm{{this.id}}">
+                    <input
+                      name="letter"
+                      type="number"
+                      value="{{this.id}}"
+                      hidden
+                    />
+                    <div class="mb-3">
+                      <select class="form-select" name="status[]" required>
+                        <option value="">Оценка партнёра</option>
+                        <option value="L">Партнёр понравился</option>
+                        <option value="D">Партнёр разочаровал</option>
+                        <option value="C">Свидание не было проведено</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label
+                        for="comment"
+                        class="form-label"
+                      >Комментарий</label>
+                      <textarea
+                        name="comment"
+                        type="text"
+                        class="form-control"
+                      ></textarea>
+                    </div>
+                  </form>
                 </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-              <button type="submit" class="btn btn-primary" form="updatePassword">Сохранить изменения</button>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="submit"
+                  form="reviewForm{{this.id}}"
+                  class="btn btn-primary"
+                >Сохранить</button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Закрыть</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      {{/each}}
 
-      <!-- Просмотреть анкету - Модальное окно -->
-      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">Моя анкета</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-            </div>
-            <div class="modal-body">
-                <img class="rounded img-fluid border border-dark mb-3" src="{{user.avatar}}" alt="">
-                <div>
-                    <p>{{user.fio}}</p>
-                    <p><b>Возраст:</b> {{user.birthday}} </p>
-                    <p><b>Город:</b><br> {{user.city}} </p>
-                    <p><b>О себе:</b><br> {{user.about}} </p>
+      <h3>Входящие письма</h3>
+      {{#unless letters_received}}
+        Тут будут ваши письма
+      {{/unless}}
+      {{#each letters_received}}
+        {{#if this.readed}}
+          <div
+            class="alert alert-secondary d-flex align-items-center justify-content-between"
+            role="alert"
+          >
+            <span>Просмотрено</span>
+            <button
+              class="mt-2 d-flex justify-content-end btn btn-secondary"
+              data-bs-toggle="modal"
+              href="#InboxModal{{this.id}}"
+              role="button"
+            >Открыть</button>
+          </div>
+        {{else}}
+          <div
+            class="alert alert-primary d-flex align-items-center justify-content-between"
+            role="alert"
+          >
+            <span>Вам пришло новое письмо!</span>
+            <button
+              id="{{this.id}}_open"
+              class="mt-2 d-flex justify-content-end btn btn-success"
+              data-bs-toggle="modal"
+              href="#InboxModal{{this.id}}"
+              data-type="letter"
+              role="button"
+            >Открыть</button>
+          </div>
+        {{/if}}
+
+        <!-- Письмо - модальное окно -->
+        <div
+          class="modal fade"
+          id="InboxModal{{this.id}}"
+          aria-hidden="true"
+          aria-labelledby="InboxModal{{this.id}}Label"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1
+                  class="modal-title fs-5"
+                  id="InboxModal{{this.id}}Label"
+                >Приглашение</h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Закрыть"
+                ></button>
+              </div>
+              <div class="modal-body p-0">
+                <div class="container">
+                  <div class="top-right p-1">
+                    <img
+                      src="{{this.sender.avatar}}"
+                      width="150px"
+                      height="150px"
+                      alt=""
+                    />
+                    <p class="text-pisma p-2">{{this.sender.fio}}
+                      <br />Возраст:
+                      {{this.sender.birthday}}
+                      <br />Город:
+                      {{this.sender.city}}
+                      <br />Информация о себе:
+                      {{this.sender.about}}
+                    </p>
+                    <p class="text-pisma p-2">Наименование места:
+                      {{this.place}}
+                      <br />
+                      Точный адрес встречи:
+                      {{this.address}}
+                      <br />Дата встречи:
+                      {{this.meet_date}}
+                      <br />Время:
+                      {{this.meet_time}}
+                      <br />Комментарий:
+                      {{this.body}}
+                    </p>
+                  </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+              </div>
+              <div class="modal-footer">
+                {{#unless this.blocked}}
+                  <button
+                    class="btn btn-primary"
+                    data-bs-target="#exampleModalToggle2"
+                    data-bs-toggle="modal"
+                  >Согласиться</button>
+                  <button
+                    id="{{this.id}}_refuce"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                  >Отказаться</button>
+                {{/unless}}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        <div
+          class="modal fade"
+          id="exampleModalToggle2"
+          aria-hidden="true"
+          aria-labelledby="exampleModalToggleLabel2"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1
+                  class="modal-title fs-5"
+                  id="exampleModalToggleLabel2"
+                >Пожалуйста, произведите оплату (сумма 15 рублей)</h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Закрыть"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form id="payForm">
+                  <div class="mb-3">
+                    <label for="disabledTextInput" class="form-label">Номер
+                      карты</label>
+                    <input
+                      name="card_number"
+                      type="text"
+                      class="form-control"
+                      maxlength="16"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="disabledTextInput" class="form-label">Дата на
+                      карте</label>
+                    <input
+                      name="card_date"
+                      placeholder="mm/yy"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="disabledTextInput" class="form-label">CVV код</label>
+                    <input
+                      name="card_cvv"
+                      type="number"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                  >Оплатить</button>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  id="nextButton"
+                  class="btn btn-primary"
+                  data-bs-target="#exampleModalToggle3"
+                  data-bs-toggle="modal"
+                  data-id="{{this.id}}"
+                  disabled
+                >Далее</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="modal fade"
+          id="exampleModalToggle3"
+          aria-hidden="true"
+          aria-labelledby="exampleModalToggleLabel3"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1
+                  class="modal-title fs-5"
+                  id="exampleModalToggleLabel3"
+                >Успешно</h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  aria-label="Закрыть"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <p>Желаю вам прекрасного свидания, спасибо за использование
+                  услуг нашего сайта!</p>
+                <p>Для связи</p>
+                <span>Ник в телеграме партнера: {{this.sender.telegram}}</span>
+              </div>
+              <div class="modal-footer">
+                <button
+                  id="{{this.id}}_close"
+                  class="btn btn-primary"
+                  data-bs-toggle="modal"
+                >Закрыть</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/each}}
 
-    <script src="scripts/my_ancket.js"></script>
+      <h3>Мои письма</h3>
+      {{#unless letters_sent}}
+        Тут будут ваши уведомления
+      {{/unless}}
+      {{#each letters_sent}}
+        {{#if this.readed}}
+          <div
+            class="alert alert-secondary d-flex align-items-center justify-content-between"
+            role="alert"
+          >
+            <span>Просмотрено</span>
+            <button
+              class="mt-2 d-flex justify-content-end btn btn-secondary"
+              data-bs-toggle="modal"
+              href="#AlertModal{{this.id}}"
+              role="button"
+            >Открыть</button>
+          </div>
+        {{else}}
+          <div
+            class="alert alert-primary d-flex align-items-center justify-content-between"
+            role="alert"
+          >
+            <span>Вам пришло новое уведомление!</span>
+            <button
+              id="{{this.id}}_open"
+              class="mt-2 d-flex justify-content-end btn btn-success"
+              data-bs-toggle="modal"
+              href="#AlertModal{{this.id}}"
+              data-type="alert"
+              role="button"
+            >Открыть</button>
+          </div>
+        {{/if}}
+
+        <!-- Письмо - модальное окно -->
+        <div
+          class="modal fade"
+          id="AlertModal{{this.id}}"
+          aria-hidden="true"
+          aria-labelledby="AlertModal{{this.id}}Label"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1
+                  class="modal-title fs-5"
+                  id="AlertModal{{this.id}}Label"
+                >Приглашение</h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Закрыть"
+                ></button>
+              </div>
+              <div class="modal-body p-0">
+                <div class="container">
+                  <div class="top-right p-1">
+                    <img
+                      src="{{this.sender.avatar}}"
+                      width="150px"
+                      height="150px"
+                      alt=""
+                    />
+                    <p class="text-pisma p-2">{{this.sender.fio}}
+                      <br />Возраст:
+                      {{this.sender.birthday}}
+                      <br />Город:
+                      {{this.sender.city}}
+                      <br />Информация о себе:
+                      {{this.sender.about}}
+                    </p>
+                    <p class="text-pisma p-2">Наименование места:
+                      {{this.place}}
+                      <br />
+                      Точный адрес встречи:
+                      {{this.address}}
+                      <br />Дата встречи:
+                      {{this.meet_date}}
+                      <br />Время:
+                      {{this.meet_time}}
+                      <br />Комментарий:
+                      {{this.body}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer d-flex justify-content-around">
+                {{#if this.declined}}
+                  <div class="text-danger">Письмо отклонено администратором</div>
+                {{/if}}
+                {{#if this.got}}
+                  <div class="text-success">Получатель принял приглашение</div>
+                {{/if}}
+                {{#if this.rejected}}
+                  <div class="text-danger">Получатель отклонил приглашение</div>
+                {{/if}}
+                <button
+                  id="{{this.id}}_close"
+                  class="btn btn-primary"
+                  data-bs-dismiss="modal"
+                >Закрыть</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      {{/each}}
+    </div>
+
+  </div>
+</div>
+
+<!-- сменить пароль - модальное окно -->
+<div
+  class="modal fade"
+  id="changePasswordModal"
+  tabindex="-1"
+  aria-labelledby="changePasswordModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="changePasswordModalLabel">Сменить
+          пароль</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Закрыть"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row bg-white">
+          <form id="updatePassword">
+            <div class="mb-3">
+              <label for="disabledTextInput" class="form-label">Старый пароль</label>
+              <input
+                name="password"
+                type="password"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="disabledTextInput" class="form-label">Новый пароль</label>
+              <input
+                name="new_password"
+                type="password"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="disabledTextInput" class="form-label">Введите повторно
+                новый пароль</label>
+              <input
+                name="confirm_password"
+                type="password"
+                class="form-control"
+                required
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Закрыть</button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          form="updatePassword"
+        >Сохранить изменения</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Просмотреть анкету - Модальное окно -->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Моя анкета</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Закрыть"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <img
+          class="rounded img-fluid border border-dark mb-3"
+          src="{{user.avatar}}"
+          alt=""
+        />
+        <div>
+          <p>{{user.fio}}</p>
+          <p><b>Возраст:</b> {{user.birthday}} </p>
+          <p><b>Город:</b><br /> {{user.city}} </p>
+          <p><b>О себе:</b><br /> {{user.about}} </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="scripts/my_ancket.js"></script>

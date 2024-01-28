@@ -39,6 +39,7 @@ const Letter = require("./models/letter");
 const Archive = require("./models/archive");
 const Payment = require("./models/payment");
 const { query } = require("./models/config");
+const Review = require("./models/review");
 
 // переадресация на страницы
 app.get("/", (req, res) => {
@@ -246,11 +247,24 @@ app.get("/my_ancket", async (req, res) => {
     }
   });
 
+  // отзывы, которые должен оставить пользователь
+  const lettersToReview = await Review.notExistsByUser(user.id);
+  const formattedLettersToReview = await Promise.all(
+    lettersToReview.map(async (letter) => {
+      partnerId = letter.sender === user.id ? letter.recipient : letter.sender;
+      letter.partner = await User.getOneById(partnerId);
+      letter.partner.name = letter.partner.fio.split(" ")[1];
+      letter.meet_date = letter.meet_date.toLocaleDateString();
+      return letter;
+    })
+  );
+
   return res.render("my_ancket.hbs", {
     user,
     letters_sent,
     letters_received,
     title: "Моя анкета",
+    letters_to_review: formattedLettersToReview,
   });
 });
 
@@ -671,6 +685,26 @@ app.get("/report_letter", upload.none(), async function (req, res) {
   letter.sender = await User.getOneById(letter.sender);
   letter.recipient = await User.getOneById(letter.recipient);
 
+  const reviews = await Review.getAllByLetter(letter.id);
+  const formatedReviews = await Promise.all(
+    reviews.map(async (review) => {
+      switch (review.status) {
+        case "L":
+          review.status = "Свидание понравилось респонденту";
+          break;
+        case "D":
+          review.status = "Свидание разочаровало респондента";
+          break;
+        case "C":
+          review.status = "Свидание отменено";
+          break;
+      }
+      review.author = await User.getOneById(review.author);
+      review.date = review.created_at.toLocaleString();
+      return review;
+    })
+  );
+
   // заполнение шаблона docx
   const template = fs.readFileSync("static/docx/report.docx", "binary");
 
@@ -684,6 +718,7 @@ app.get("/report_letter", upload.none(), async function (req, res) {
       place: letter.place,
       address: letter.address,
       body: letter.body,
+      reviews: formatedReviews,
     },
   });
 
@@ -746,6 +781,55 @@ app.post("/pay", upload.none(), async function (req, res) {
   }
 
   res.status(200).end();
+});
+
+// добавить отзыв о свидании
+app.post("/review", async (req, res) => {
+  const obj = JSON.parse(JSON.stringify(req.body));
+
+  console.log(obj);
+  const email = req.cookies["hola"];
+
+  if (!email) {
+    return res.status(400).json({ error: "Пользователь не найден" });
+  }
+
+  const user = await User.getOne(email);
+  if (!user) {
+    return res.status(400).json({ error: "Пользователь не найден" });
+  }
+
+  const letter = await Letter.getOneById(obj.letter);
+  if (!letter) {
+    return res.status(400).json({ error: "Письмо не найдено" });
+  }
+  if (letter.sender !== user.id && letter.recipient !== user.id) {
+    return res.status(400).json({ error: "Ошибка доступа" });
+  }
+
+  obj.author = user.id;
+
+  const review = await Review.create(obj);
+
+  if (!review) {
+    return res.status(400).json({ error: "Ошибка добавления отзыва" });
+  }
+
+  res.status(200).end();
+});
+
+app.get("/review/user/:id", async (req, res) => {
+  const email = req.cookies["hola"];
+
+  if (email === "admin@admin") {
+    return res.status(400).json({ error: "Ошибка доступа" });
+  }
+
+  const userId = req.params.id;
+
+  const reviews = await Review.getAllByUser(userId);
+
+  return res.status(200).json({ reviews });
 });
 
 // данные о пользователе

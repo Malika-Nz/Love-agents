@@ -131,6 +131,26 @@ if (payForm) {
   });
 }
 
+Array.from(document.getElementsByTagName("form")).forEach((form) => {
+  if (form.id.includes("reviewForm")) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const status = e.target.elements["status[]"].value;
+      const comment = e.target.elements.comment.value;
+      const letter = +e.target.elements.letter.value;
+      console.log(status, comment, letter);
+      fetch(`/review`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({ status, comment, letter }),
+      });
+      window.location.reload();
+    });
+  }
+});
+
 document.addEventListener("click", (e) => {
   // кнопка "Открыть"
   if (e.target.id && e.target.id.includes("open")) {
