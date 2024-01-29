@@ -92,7 +92,10 @@
       {{/each}}
     </div>
     <div class="col-7">
-      <p style="text-align: right; margin-right: 90px;"><b>ПОЛЬЗОВАТЕЛИ:</b></p>
+      <p style="text-align: right; margin-right: 90px;"><b>ПОЛЬЗОВАТЕЛИ:</b>
+        (всего
+        {{total_users}}, заблокировано
+        {{total_archived}})</p>
       <div class="accordion accordion-flush" id="users">
         {{#each users}}
           <div class="accordion-item">

@@ -96,6 +96,8 @@ app.get("/admin", async (req, res) => {
   res.render("admin.hbs", {
     title: "Админка",
     users,
+    total_users: users.length,
+    total_archived: archived.length,
     letters,
     payments,
     user: true,
@@ -131,6 +133,13 @@ app.get("/cards", async (req, res) => {
   }
 
   const user = await User.getOne(email);
+
+  if (!user) {
+    res.cookie("hola", "", {
+      expires: new Date(Date.now() - 1),
+    });
+    return res.redirect(301, "/reg");
+  }
 
   // получаем всех пользователей, кроме текущего и тех, кого он хочет видеть
   let usersArray = await User.getAll();
